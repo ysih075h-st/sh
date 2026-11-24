@@ -1,28 +1,1079 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1326"><title>과제 타이머 — Task Vanguard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>과제 타이머</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-:root{--bg:#0b1326;--deep:#060e20;--panel:#131b2e;--raised:#1a233a;--line:#29344b;--text:#eef3ff;--muted:#91a0bc;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--cyan:#06b6d4;--mono:'DM Mono',monospace}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#17264a 0,transparent 48%),var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',Pretendard,-apple-system,sans-serif;font-size:14px;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit}.shell{max-width:1180px;margin:auto;padding:28px 28px 60px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}.brand{display:flex;align-items:center;gap:12px}.brand-icon{width:40px;height:40px;border:1px solid #2b4661;background:#10243a;border-radius:12px;display:grid;place-items:center;color:#5ee4ca;font-size:21px}.brand-title{font-weight:800;font-size:17px;letter-spacing:-.4px}.brand-sub{font-size:10px;letter-spacing:1.8px;color:#7185a5;text-transform:uppercase;margin-top:3px}.topright{display:flex;align-items:center;gap:14px}.clock{font-family:var(--mono);color:#a9b7d1;font-size:12px}.pill{border:1px solid #604425;background:#291f1b;color:#ffbe66;padding:7px 10px;border-radius:8px;font-size:11px}.primary{border:0;background:#19a9d0;color:#061724;padding:11px 15px;border-radius:9px;font-weight:700;box-shadow:0 5px 18px #06b6d422}.primary:hover{background:#42c5e7;transform:translateY(-1px)}.hero{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:26px}.eyebrow{font-family:var(--mono);font-size:10px;color:#65d6d1;letter-spacing:1.8px;margin-bottom:10px}.hero h1{font-size:30px;letter-spacing:-1.1px;margin:0 0 9px}.hero p{margin:0;color:var(--muted)}.date-label{color:#71809b;font:11px var(--mono);letter-spacing:1px}.panel{background:linear-gradient(140deg,#151f34,#111a2d);border:1px solid #26334a;border-radius:16px;box-shadow:0 8px 30px #0003}.emergency{padding:20px 22px;margin-bottom:24px;border-color:#59452b;background:linear-gradient(115deg,#261f1c,#191d2b 75%);position:relative;overflow:hidden}.emergency:after{content:'';position:absolute;width:180px;height:180px;border-radius:50%;background:#f59e0b0b;right:-50px;top:-90px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.section-title{font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px}.section-title small{font:10px var(--mono);letter-spacing:1px;color:#8393af}.em-icon{color:#ffb44c}.em-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.em-card{padding:15px 16px;background:#0f1829;border:1px solid #453c31;border-radius:12px;min-height:105px}.em-card b{display:block;font-size:14px;margin-bottom:10px}.em-card span{font:11px var(--mono);color:#ffc06a}.em-empty{color:#d4b488;font-size:13px;padding:7px 0}.form-panel{padding:20px 22px;margin-bottom:30px}.form-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.form-top h2{font-size:16px;margin:0}.form-top p{margin:4px 0 0;font-size:12px;color:var(--muted)}.type-row{display:flex;gap:8px;margin-bottom:14px}.type{padding:8px 13px;border:1px solid #35415a;border-radius:8px;background:#121c30;color:#9eabc3;font-size:12px}.type.active{border-color:#148aaa;background:#0d2a3a;color:#59d5ed}.fields{display:grid;grid-template-columns:1.5fr 1.1fr .75fr .75fr 1.1fr auto;gap:10px;align-items:end}.field label{display:block;color:#93a1b9;font-size:11px;margin:0 0 7px}.field input,.field select{width:100%;height:40px;background:#0c1629;border:1px solid #303d55;border-radius:8px;padding:0 11px;color:#e8effd;outline:none}.field input:focus{border-color:#18a2c0;box-shadow:0 0 0 3px #06b6d41a}.field input::placeholder{color:#64728a}.estimate{height:40px;display:flex;align-items:center;white-space:nowrap;color:#63d8bd;font:11px var(--mono);padding:0 4px}.form-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px}.helper{color:#7787a2;font-size:11px}.form-actions{display:flex;gap:8px}.secondary{border:1px solid #35415a;background:#182238;color:#aebbd1;padding:9px 13px;border-radius:8px;font-size:12px}.submit{border:0;background:#16a8cf;color:#071923;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700}.msg{font-size:12px;color:#5ed7b1;margin-left:8px}.error{color:#ff7474;font-size:11px;margin-top:6px;min-height:14px}.columns{display:grid;grid-template-columns:1fr 280px;gap:22px}.tasks-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.tasks-head h2{font-size:18px;margin:0}.sort{font:10px var(--mono);letter-spacing:1px;color:#74839e}.task-list{display:grid;gap:12px}.task{padding:17px 18px 14px;position:relative;overflow:hidden}.task.critical{animation:pulse 1.5s ease-in-out infinite;border-color:#7d3438;box-shadow:0 0 15px #ef444426}.task.shaking:not(:hover){animation:shake .42s ease-in-out infinite,pulse 1.5s ease-in-out infinite}.task.over{filter:saturate(.3);border-color:#384354}.task-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.task-name{font-size:16px;font-weight:700;letter-spacing:-.2px}.tags{display:flex;align-items:center;gap:7px;margin-bottom:8px}.tag{font-size:10px;color:#91a4c4;background:#202c43;padding:4px 7px;border-radius:5px}.tag.alert{background:#482626;color:#ff9b92}.tag.ok{background:#102f2e;color:#63d8b1}.task-actions{display:flex;gap:7px}.smallbtn{font-size:11px;padding:7px 10px;border-radius:7px;border:1px solid #35415a;background:#172238;color:#b7c3d9}.smallbtn.done{border-color:#27604e;color:#64d7b0;background:#122a29}.meta{display:flex;gap:16px;flex-wrap:wrap;color:#a5b2c9;font-size:11px;margin:12px 0}.mono{font-family:var(--mono)}.barline{display:flex;justify-content:space-between;color:#8190aa;font:10px var(--mono);margin-bottom:7px}.track{height:7px;background:#273148;border-radius:9px;overflow:hidden}.fill{height:100%;border-radius:9px;transition:width .5s}.task-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#7989a5;font-size:11px}.guide-link{border:0;background:none;color:#4bc8db;font-size:11px;padding:0}.sidebar{display:grid;align-content:start;gap:14px}.side-panel{padding:17px}.side-title{font-size:13px;font-weight:700;margin-bottom:13px}.legend-row{display:flex;align-items:center;justify-content:space-between;margin:10px 0;color:#a5b2c9;font-size:11px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:7px}.tip{color:#8796af;font-size:11px;line-height:1.7}.empty{padding:36px 22px;text-align:center;color:#93a1b9;border:1px dashed #33415a;border-radius:14px}.empty strong{display:block;color:#dce6f7;font-size:14px;margin-bottom:8px}.archive{margin-top:27px}.archive summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;padding:17px 19px}.archive summary::-webkit-details-marker{display:none}.archive-items{padding:0 14px 14px;display:grid;gap:9px}.archive-card{display:flex;justify-content:space-between;align-items:center;background:#101a2c;border:1px solid #26334a;padding:12px 14px;border-radius:10px}.archive-card strong{font-size:13px}.archive-card small{display:block;color:#8292ac;margin-top:5px;font-size:10px}.archive-actions{display:flex;align-items:center;gap:10px}.archive-actions label{color:#8e9db5;font-size:11px}.archive-actions input{accent-color:#2bd1a2}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#18253a;border:1px solid #3b5066;border-radius:12px;padding:13px 17px;display:none;align-items:center;gap:16px;box-shadow:0 10px 35px #0008;z-index:5}.toast.show{display:flex}.toast button{background:none;border:0;color:#53d5be;font-weight:700}.toastbar{height:2px;background:#26c69c;position:absolute;bottom:0;left:0;animation:shrink 8s linear forwards}.guide{position:fixed;inset:0;background:#030816c9;display:none;justify-content:flex-end;z-index:4}.guide.open{display:flex}.drawer{width:min(510px,100%);height:100%;overflow:auto;background:#101a2d;border-left:1px solid #30415c;padding:28px}.drawer-top{display:flex;justify-content:space-between;align-items:center}.drawer h2{font-size:21px;margin:7px 0 18px}.close{border:0;background:#1b2940;border-radius:8px;width:36px;height:36px;font-size:18px}.gauge{padding:14px;background:#152138;border:1px solid #293a56;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.gauge strong{font:20px var(--mono)}.gauge small{color:#93a1b9;display:block;margin-top:5px}.guide h3{font-size:13px;margin:20px 0 9px}.guide textarea{width:100%;background:#0b1426;color:#e7eefc;border:1px solid #2d3b54;border-radius:9px;padding:11px;resize:vertical}.guide-card{padding:14px;background:#152138;border:1px solid #2b3b56;border-radius:11px;color:#aab7cd;line-height:1.7;font-size:12px}.guide-card b{color:#e1eaf8}.check{display:flex;gap:9px;margin:10px 0;color:#aab7cd;font-size:12px}.check input{accent-color:#10b981}.footer{color:#53627b;font:10px var(--mono);text-align:center;margin-top:32px;letter-spacing:1px}@keyframes pulse{50%{box-shadow:0 0 16px #ef444433;border-color:#a63e43}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(1px)}75%{transform:translateX(-1px)}}@keyframes shrink{to{width:0}}@media(max-width:900px){.fields{grid-template-columns:repeat(3,1fr)}.fields .field:first-child{grid-column:span 2}.estimate{grid-column:span 2}.columns{grid-template-columns:1fr}.sidebar{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.shell{padding:18px 15px 45px}.topbar{margin-bottom:28px}.clock,.pill{display:none}.hero h1{font-size:25px}.hero{align-items:flex-start}.date-label{display:none}.em-grid{grid-template-columns:1fr}.form-panel{padding:17px 14px}.type-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.type{padding:8px 4px;font-size:10px}.fields{grid-template-columns:1fr 1fr}.fields .field:first-child{grid-column:span 2}.fields .field:nth-child(2){grid-column:span 2}.fields .field:nth-child(5){grid-column:span 2}.estimate{grid-column:span 2}.form-bottom{align-items:flex-start;gap:10px;flex-direction:column}.form-actions{width:100%;justify-content:flex-end}.sidebar{grid-template-columns:1fr}.task{padding:15px}.task-head{flex-direction:column}.task-actions{position:absolute;right:14px;top:14px}.meta{gap:9px}.task-bottom{gap:10px}.section-title{font-size:15px}}
-</style></head>
-<body><div class="shell"><header class="topbar"><div class="brand"><div class="brand-icon">⌁</div><div><div class="brand-title">과제 타이머</div><div class="brand-sub">TASK VANGUARD · 개인 대시보드</div></div></div><div class="topright"><span class="pill">⚑ 긴급 미션 <b id="urgentCount">0</b></span><span class="clock" id="clock"></span><button class="primary" onclick="document.getElementById('name').focus()">＋ 새 과제 추가</button></div></header>
-<section class="hero"><div><div class="eyebrow">MISSION CONTROL / 01</div><h1>오늘의 과제 현황</h1><p>마감이 다가올수록 체력은 줄어듭니다. 지금, 무엇부터 시작할까요?</p></div><div class="date-label" id="today"></div></section>
-<section class="panel emergency"><div class="section-head"><div class="section-title"><span class="em-icon">◈</span> 지금 시작해야 할 과제 <small>START NOW</small></div><span class="tag alert" id="emCount">0 MISSIONS</span></div><div id="emergencyList" class="em-grid"></div></section>
-<section class="panel form-panel"><div class="form-top"><div><h2 id="formTitle">＋ 과제 빠른 등록</h2><p>분량과 단위 시간을 입력하면 예상 소요 시간을 계산해요.</p></div><span class="tag">QUICK ADD</span></div><div class="type-row"><button class="type active" data-type="보고서" data-unit="쪽" data-min="40">▤ 보고서</button><button class="type" data-type="PPT 발표" data-unit="장" data-min="20">▥ PPT 발표</button><button class="type" data-type="문제풀이" data-unit="문제" data-min="5">⊞ 문제풀이</button><button class="type" data-type="기타" data-unit="개" data-min="">＋ 기타</button></div>
-<form id="taskForm" novalidate><div class="fields"><div class="field"><label for="name">과제 이름</label><input id="name" maxlength="30" placeholder="예: 현대사회와 윤리 보고서"><div class="error" id="nameError"></div></div><div class="field"><label for="due">마감 날짜와 시간</label><input id="due" type="datetime-local"><div class="error" id="dueError"></div></div><div class="field"><label>분량 <span id="unitLabel">(쪽)</span></label><input id="amount" type="number" min="1" placeholder="12"><div class="error" id="amountError"></div></div><div class="field"><label>단위당 시간 (분)</label><input id="rate" type="number" min="1" placeholder="40"><div class="error" id="rateError"></div></div><div class="estimate" id="estimate">예상 소요 —</div><button class="submit" id="submitBtn">추가</button></div><div class="form-bottom"><div><span class="helper">유형 선택 후 이름과 마감을 입력하세요.</span><span class="msg" id="formMsg"></span></div><div class="form-actions" id="editActions" hidden><button type="button" class="secondary" onclick="cancelEdit()">취소</button></div></div></form></section>
-<div class="columns"><main><div class="tasks-head"><h2>진행 중인 미션 <span class="tag" id="activeCount">0</span></h2><span class="sort">SORTED BY DEADLINE ↑</span></div><div id="taskList" class="task-list"></div><details class="panel archive" id="archive"><summary><span class="section-title">✦ CLEAR! 완료 미션 <small>ARCHIVE</small></span><span class="tag ok" id="doneCount">0 CLEARED　⌄</span></summary><div class="archive-items" id="archiveList"></div><div style="padding:0 14px 14px;text-align:right"><button class="smallbtn" id="deleteSelected" onclick="deleteSelected()" disabled>선택 삭제 (0)</button></div></details></main><aside class="sidebar"><section class="panel side-panel"><div class="side-title">HP 상태 범례</div><div class="legend-row"><span><i class="dot" style="background:var(--green)"></i>여유 구간</span><span class="mono">51–100%</span></div><div class="legend-row"><span><i class="dot" style="background:var(--amber)"></i>주의 구간</span><span class="mono">20–50%</span></div><div class="legend-row"><span><i class="dot" style="background:var(--red)"></i>위기 구간</span><span class="mono">0–19%</span></div><div class="legend-row"><span><i class="dot" style="background:#64748b"></i>GAME OVER</span><span class="mono">마감 초과</span></div></section><section class="panel side-panel"><div class="side-title">전술 메모</div><div class="tip">HP는 마감까지 남은 시간을 기준으로 계산돼요. 7일 이상 남으면 100%를 유지합니다.<br><br>예상 소요 시간을 뺀 시작 마지노선이 3시간 이내라면 지금 시작할 과제로 분류합니다.</div></section></aside></div><div class="footer">FOCUS THE MISSION · SAVE YOUR HP</div></div>
-<div class="toast" id="toast"><span id="toastText">과제를 삭제했어요.</span><button onclick="undoDelete()">되돌리기</button><div class="toastbar"></div></div>
-<div class="guide" id="guide" onclick="if(event.target===this)closeGuide()"><section class="drawer"><div class="drawer-top"><div class="eyebrow">MISSION BRIEF / 작성 가이드</div><button class="close" onclick="closeGuide()">×</button></div><h2 id="guideTitle">과제 작성 가이드</h2><div class="gauge"><div><strong id="guideHP">—%</strong><small>현재 남은 체력</small></div><span class="tag" id="guideDue">D-DAY</span></div><div class="guide-card"><b>이 과제가 요구하는 것</b><br>주제와 제출 조건을 한 문장으로 정리하고, 요구된 형식과 분량을 먼저 확인하세요. 자료를 추가하면 핵심 내용을 이곳에 정리할 수 있어요.</div><h3>쟁점과 분석 관점</h3><textarea rows="3" placeholder="주요 쟁점이나 과제 내용을 적어 두세요."></textarea><div class="guide-card" style="margin-top:10px"><b>구성안 예시</b><br>01　서론 — 주제와 핵심 질문 소개 <span class="mono">(약 15%)</span><br>02　본론 — 근거를 비교하고 관점별로 분석 <span class="mono">(약 70%)</span><br>03　결론 — 분석을 요약하고 내 입장 정리 <span class="mono">(약 15%)</span></div><h3>제출 전 감점 방지 체크</h3><label class="check"><input type="checkbox"> 과제 안내의 형식과 분량을 지켰나요?</label><label class="check"><input type="checkbox"> 인용한 자료의 출처를 표시했나요?</label><label class="check"><input type="checkbox"> 주장마다 근거가 연결되어 있나요?</label><label class="check"><input type="checkbox"> 오탈자와 파일 형식을 확인했나요?</label><label class="check"><input type="checkbox"> 제출 파일을 다시 열어 확인했나요?</label><button class="secondary" style="margin-top:15px" onclick="alert('자료 분석은 이 초안에서 자동으로 실행되지 않습니다. 자료 내용을 쟁점 칸에 적어 가이드를 활용해 주세요.')">자료·쟁점 올리고 작성 팁 보기</button></section></div>
+/* VOICE: a tactical HUD for a stressed student — calm navy, signals only where time is short.
+   IDEA: every assignment is a unit with a health bar; the deadline drains it.
+   PICTURE: segmented game HP bars and the "start now" emergency box, at the top of the first screen.
+   COLOUR and TYPE: DESIGN.md tokens — navy #0b1326 ground, emerald/amber/crimson HP signals, cyan for AI; Plus Jakarta Sans + Noto Sans KR, JetBrains Mono for counters.
+   LAYOUT: header HUD, emergency box, quick add, task list; workspace = HUD strip, sources left, guide right; archive = survival dial, clear list, game over. */
+:root{color-scheme:dark;
+--bg:#0b1326;--dim:#060e20;--low:#131b2e;--cont:#1a233a;--bright:#31394d;
+--ink:#e6ebf5;--sub:#a9b4c9;--mute:#8592aa;
+--safe:#10b981;--warn:#f59e0b;--crit:#ef4444;--over:#64748b;--clear:#34d399;--ai:#06b6d4;
+--glow-crit:0 0 15px rgba(239,68,68,.25);--glow-safe:0 0 12px rgba(16,185,129,.3);--shadow:0 4px 20px -2px rgba(0,0,0,.4);
+--sans:"Plus Jakarta Sans","Noto Sans KR",-apple-system,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+a{color:var(--ai)}
+h1,h2,h3,h4{margin:0;line-height:1.25;text-wrap:balance}
+h1{font-size:clamp(26px,3.4vw,32px);font-weight:700;line-height:1.2}
+h2{font-size:clamp(19px,2.2vw,22px);font-weight:600}
+h3{font-size:17px;font-weight:600}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto}
+.band{padding:clamp(20px,3vw,40px) max(4vw,16px)}
+.muted{color:var(--sub)}
+.small{font-size:12.5px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid var(--bright);background:var(--cont);font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:#4a556f}
+.btn.primary{background:var(--safe);border-color:var(--safe);color:#04241a}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn.ai{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.5);color:#7ee6f5}
+.btn.danger{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.45);color:#fca5a5}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px}
+input[type=text],input[type=number],input[type=datetime-local],select,textarea{width:100%;min-height:44px;padding:10px 12px;border-radius:8px;border:1px solid var(--bright);background:var(--cont);font-size:16px}
+textarea{resize:vertical;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ai);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--sub);font-weight:500}
+.err{color:#fca5a5;font-size:12.5px;min-height:18px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--bright);background:var(--low);color:var(--sub);white-space:nowrap}
+
+/* header HUD */
+.top{position:sticky;top:0;z-index:20;background:rgba(6,14,32,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--bright)}
+.top .wrap{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;padding:12px max(4vw,16px)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:800;font-size:18px}
+.nav{display:flex;gap:4px}
+.nav a{padding:10px 12px;border-radius:8px;color:var(--sub);text-decoration:none;font-weight:600}
+.nav a[aria-current=page]{background:var(--cont);color:var(--ink)}
+.hud{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.clock{font-family:var(--mono);color:var(--sub);font-size:13px}
+.urgent{font-family:var(--mono);font-size:12.5px;padding:6px 10px;border-radius:8px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:#fca5a5}
+.urgent.calm{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.35);color:#6ee7b7}
+.banner{background:#3a2a0b;color:#fcd34d;text-align:center;padding:10px 16px;font-size:13.5px}
+
+/* emergency */
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{padding:8px 12px;border-radius:8px;background:var(--low);border:1px solid var(--bright);font-size:13px;color:var(--sub)}
+.stat b{font-family:var(--mono);color:var(--ink);margin-left:6px}
+.emg{border-radius:16px;padding:18px;background:linear-gradient(180deg,rgba(239,68,68,.10),rgba(239,68,68,.03));border:1px solid rgba(239,68,68,.45);box-shadow:var(--glow-crit)}
+.emg.calm{background:var(--low);border-color:var(--bright);box-shadow:none}
+.emg-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.emg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
+.emg-item{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:12px;background:var(--dim);border:1px solid rgba(239,68,68,.35);color:var(--ink);text-decoration:none}
+.emg-item:hover{border-color:var(--crit)}
+.emg-item .why{color:#fca5a5;font-weight:600}
+.emg-item .zero{font-family:var(--mono);font-size:12.5px;color:var(--sub)}
+
+/* quick add */
+.quick{border-radius:16px;background:var(--low);border:1px solid var(--bright);padding:16px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,.7fr) auto;gap:4px 10px;align-items:start}
+.quick .types{grid-column:1/-1;justify-self:start;margin-bottom:10px}
+.quick .sub{margin-top:25px}
+.types{display:inline-flex;gap:4px;padding:4px;border-radius:10px;background:var(--dim);border:1px solid var(--bright);flex-wrap:wrap}
+.types button{min-height:36px;padding:0 10px;border-radius:7px;border:0;background:transparent;color:var(--sub);font-weight:600;cursor:pointer;font-size:13px}
+.types button[aria-pressed=true]{background:var(--cont);color:var(--ink);box-shadow:inset 0 0 0 1px var(--t)}
+.amt{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:6px}
+.calc{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--sub)}
+.calc b{font-family:var(--mono);color:var(--ai);font-size:15px}
+.ok{color:#6ee7b7}
+
+/* task cards */
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:12px}
+.card{position:relative;display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:14px;background:var(--low);border:1px solid var(--bright);box-shadow:var(--shadow)}
+.card.crit{border-color:rgba(239,68,68,.55)}
+.card.pulse{animation:pulse 1.5s ease-in-out infinite}
+.card.shake{animation:pulse 1.5s ease-in-out infinite,shake .45s linear infinite}
+.card.shake:hover,.card.shake:focus-within{animation:pulse 1.5s ease-in-out infinite}
+.card.over{background:#121827;filter:saturate(.3)}
+.card.over h3{color:var(--sub)}
+@keyframes pulse{50%{box-shadow:var(--glow-crit),0 0 0 1px var(--crit)}}
+@keyframes shake{20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+.c-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;color:var(--t);border:1px solid var(--t)}
+.badge{padding:2px 8px;border-radius:6px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.b-crit{background:rgba(239,68,68,.15);color:#fca5a5}
+.b-warn{background:rgba(245,158,11,.15);color:#fcd34d}
+.b-over{background:rgba(100,116,139,.25);color:#cbd5e1}
+.b-sample{background:var(--cont);color:var(--mute);font-family:var(--sans)}
+.c-time{font-family:var(--mono);font-size:13px;color:var(--sub)}
+.hp{display:grid;grid-template-columns:auto minmax(0,1fr) 52px;gap:10px;align-items:center}
+.hp .lbl{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--mute)}
+.bar{height:14px;background:#0a1020;border-radius:3px;position:relative;overflow:hidden;
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(10% - 3px),transparent calc(10% - 3px) 10%);mask:repeating-linear-gradient(90deg,#000 0 calc(10% - 3px),transparent calc(10% - 3px) 10%)}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--c);box-shadow:0 0 12px var(--c);transition:width .5s}
+.hp .pct{font-family:var(--mono);font-weight:700;text-align:right;color:var(--c)}
+.c-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--sub)}
+.c-meta b{color:var(--ink);font-weight:600}
+.c-act{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.c-act .btn{flex:1 1 auto}
+.empty{border:1px dashed var(--bright);border-radius:14px;padding:40px 20px;text-align:center;color:var(--sub)}
+.note{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:12px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3);margin-bottom:12px;font-size:13.5px}
+.legend{display:flex;gap:10px 22px;flex-wrap:wrap;font-size:13px;color:var(--sub);border-top:1px solid var(--bright)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:26px;height:8px;border-radius:2px;background:var(--c)}
+
+/* workspace */
+.back{display:inline-flex;gap:6px;align-items:center;color:var(--sub);text-decoration:none;font-weight:600;margin-bottom:12px;min-height:44px}
+.ws-hud{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding:16px;border-radius:16px;background:var(--low);border:1px solid var(--bright)}
+.dial{width:112px;height:112px;position:relative}
+.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dial div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dial b{font-family:var(--mono);font-size:22px}
+.dial span{font-size:11px;color:var(--mute)}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
+.meta div{padding:10px 12px;border-radius:10px;background:var(--dim)}
+.meta dt{font-size:12px;color:var(--mute)}
+.meta dd{margin:2px 0 0;font-family:var(--mono);font-weight:700;font-size:15px}
+.ws{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px;align-items:start}
+.panel{border-radius:16px;background:var(--low);border:1px solid var(--bright);padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel h2{font-size:18px}
+.issue-in{display:flex;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip button{border:0;background:none;color:var(--mute);cursor:pointer;font-size:15px;line-height:1;padding:0 0 0 2px;min-width:24px;min-height:24px}
+.drop{display:block;padding:18px;border-radius:12px;border:1.5px dashed var(--bright);background:var(--dim);text-align:center;color:var(--sub);cursor:pointer}
+.drop.on{border-color:var(--ai);color:var(--ink)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.file{padding:12px;border-radius:10px;background:var(--dim);border:1px solid var(--bright);display:flex;flex-direction:column;gap:8px}
+.file-h{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.file-h b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kw{display:flex;flex-wrap:wrap;gap:4px}
+.kw span{font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(6,182,212,.1);color:#7ee6f5}
+.req{margin:0;padding-left:18px;font-size:13px;color:var(--sub)}
+.sum{white-space:pre-wrap;font-size:13px;color:var(--sub);line-height:1.6}
+.tip{padding:10px 12px;border-radius:10px;background:var(--dim)}
+.tip b{display:block;font-size:13.5px}
+.tip span{font-size:13px;color:var(--sub)}
+.g-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.g-badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--cont);color:var(--sub)}
+.g-badge.ai{background:rgba(6,182,212,.15);color:#7ee6f5}
+.status{font-size:13px;color:var(--sub);margin:0}
+.status.e{color:#fca5a5}.status.w{color:#fcd34d}
+.need{padding:14px;border-radius:12px;background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.3);font-size:14.5px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{white-space:nowrap;text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--bright)}
+td{padding:10px;border-bottom:1px solid var(--bright);vertical-align:top;line-height:1.55}
+td ul{margin:0;padding-left:16px}
+td .src{display:block;font-size:12px;color:var(--mute)}
+.alloc td:nth-child(2){font-family:var(--mono);white-space:nowrap;color:var(--ai)}
+.abar{height:8px;border-radius:2px;background:var(--ai);opacity:.7;margin-top:6px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--bright);cursor:pointer}
+.check input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--safe);flex:none}
+.check.done span{color:var(--mute);text-decoration:line-through}
+.next{padding:14px;border-radius:12px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.35)}
+.next b{color:#6ee7b7;display:block;font-size:12.5px;margin-bottom:2px}
+
+/* archive */
+.arc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;padding:18px;border-radius:16px;background:var(--low);border:1px solid var(--bright);margin-top:16px}
+.donut{width:150px;height:150px;position:relative}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut b{font-family:var(--mono);font-size:28px;color:var(--clear)}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--low);border:1px solid var(--bright)}
+.row+.row{margin-top:8px}
+.row .when{font-family:var(--mono);font-size:12.5px;color:var(--sub)}
+.row.sel{border-color:rgba(52,211,153,.6)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+
+/* sheet + toast */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;background:rgba(6,14,32,.75);padding:16px}
+.sheet[hidden]{display:none}
+.sheet-box{width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;border-radius:16px;background:var(--low);border:1px solid var(--bright);box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:14px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid .full{grid-column:1/-1}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:50;width:min(460px,calc(100% - 32px));border-radius:16px;background:var(--cont);border:1px solid var(--bright);box-shadow:var(--shadow);overflow:hidden}
+.toast[hidden]{display:none}
+.toast .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 10px 10px 16px}
+.toast .prog{height:3px;background:var(--ai);transform-origin:left;animation:drain 8s linear forwards}
+@keyframes drain{to{transform:scaleX(0)}}
+
+@media (max-width:980px){.quick{grid-template-columns:repeat(2,minmax(0,1fr))}.quick .sub{grid-column:1/-1;margin-top:4px}.ws{grid-template-columns:minmax(0,1fr)}.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){
+ .emg-grid{grid-template-columns:minmax(0,1fr)}
+ .quick{grid-template-columns:minmax(0,1fr)}
+ .hud{margin-left:0;width:100%}
+ .top .btn.primary{flex:1 1 100%}
+ .clock{display:none}
+ .quick .types{justify-self:stretch}.quick .types button{flex:1}
+ .ws-hud,.arc{grid-template-columns:minmax(0,1fr);justify-items:center}
+ .meta{width:100%}
+ .sheet{align-items:flex-end;padding:0}
+ .sheet-box{border-radius:16px 16px 0 0;max-height:92vh;width:100%}
+ .form-grid{grid-template-columns:minmax(0,1fr)}
+ table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--bright)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:6.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6em;margin-inline-start:-6.5em;color:var(--mute);font-size:12px}.stack td:empty{display:none}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#dashboard" aria-label="과제 타이머 대시보드">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="9" width="24" height="14" rx="3" fill="none" stroke="#31394d" stroke-width="2"/><rect x="27" y="13" width="3" height="6" rx="1" fill="#31394d"/><rect x="6" y="12" width="5" height="8" rx="1" fill="#ef4444"/><rect x="12.5" y="12" width="5" height="8" rx="1" fill="#f59e0b" opacity=".85"/><rect x="19" y="12" width="5" height="8" rx="1" fill="#10b981" opacity=".35"/></svg>
+      과제 타이머
+    </a>
+    <nav class="nav" aria-label="주요 화면">
+      <a href="#dashboard" data-nav="dashboard">대시보드</a>
+      <a href="#archive" data-nav="archive">아카이브</a>
+    </nav>
+    <div class="hud">
+      <span class="clock" id="clock" aria-label="현재 시각"></span>
+      <span class="urgent" id="urgent"></span>
+      <button class="btn primary" id="newBtn" type="button">+ 새 과제 추가</button>
+    </div>
+  </div>
+</header>
+<div class="banner" id="banner" hidden>이 창에서는 저장이 안 돼요. 새로고침하면 과제가 사라져요.</div>
+<main id="view"></main>
+
+<div class="sheet" id="sheet" hidden>
+  <form class="sheet-box" id="sheetForm" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" novalidate>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <h2 id="sheetTitle">새 과제 등록</h2>
+      <button class="btn ghost sm" type="button" data-close aria-label="닫기">닫기</button>
+    </div>
+    <div id="sheetFields"></div>
+  </form>
+</div>
+
+<div class="toast" id="toast" hidden role="status">
+  <div class="in"><span id="toastText"></span><button class="btn sm ai" type="button" id="undoBtn">되돌리기</button></div>
+  <div class="prog" id="toastProg"></div>
+</div>
+
 <script>
-const KEY='task-vanguard-v1';let tasks=[],selectedType='보고서',editing=null,undoItems=null,undoTimer=null;
-const $=id=>document.getElementById(id);function load(){try{tasks=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{tasks=[]}}function save(){try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{$('storageBanner')?.remove();const b=document.createElement('div');b.id='storageBanner';b.style.cssText='position:sticky;top:0;background:#4a361a;color:#ffd18a;text-align:center;padding:9px;z-index:10;font-size:12px';b.textContent='이 창에서는 저장이 안 돼요. 새로고침하면 과제가 사라져요.';document.body.prepend(b)}}function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function remaining(t){return new Date(t.due)-Date.now()}function hp(t){return Math.max(0,Math.min(100,remaining(t)/1000/60/(168*60)*100))}function duration(t){return (Number(t.amount)||0)*(Number(t.rate)||0)}function fmtDur(ms){let n=Math.max(0,Math.floor(ms/60000)),d=Math.floor(n/1440),h=Math.floor(n%1440/60),m=n%60;return (d?`D-${d} · `:'')+`${h}시간 ${m}분`}function fmtWork(min){return min<60?`${min}분`:`${Math.floor(min/60)}시간${min%60?` ${min%60}분`:''}`}function datefmt(d){return new Date(d).toLocaleString('ko-KR',{month:'numeric',day:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false})}function urgent(t){return !t.done&&(remaining(t)-duration(t)*60000<=3*3600000)}function render(){let active=tasks.filter(t=>!t.done).sort((a,b)=>new Date(a.due)-new Date(b.due)),done=tasks.filter(t=>t.done);$('activeCount').textContent=active.length;$('doneCount').textContent=`${done.length} CLEARED　⌄`;$('urgentCount').textContent=active.filter(urgent).length;let urg=active.filter(urgent).slice(0,3);$('emCount').textContent=`${urg.length} MISSIONS`;$('emergencyList').innerHTML=urg.length?urg.map(t=>{let gap=remaining(t)-duration(t)*60000;return `<div class="em-card"><b>${esc(t.name)}</b><span>${gap<0?'⚠ 지금 시작해도 '+fmtDur(-gap)+' 부족':`⏱ ${fmtDur(gap)} 안에 시작하세요`}</span></div>`}).join(''):'<div class="em-empty">아직 급하게 시작할 과제가 없어요. 좋은 페이스예요.</div>';
-$('taskList').innerHTML=active.length?active.map(t=>{let r=remaining(t),p=hp(t),over=r<=0,color=over?'#64748b':p>50?'#10b981':p>=20?'#f59e0b':'#ef4444',short=r<3600000;let d=duration(t),gap=r-d*60000;return `<article class="panel task ${over?'over':''} ${!over&&r<=86400000?'critical':''} ${!over&&short?'shaking':''}"><div class="task-head"><div><div class="tags"><span class="tag">${esc(t.type)}</span>${over?'<span class="tag">GAME OVER</span>':gap<0?'<span class="tag alert">시간 부족</span>':''}</div><div class="task-name">${esc(t.name)}</div></div><div class="task-actions"><button class="smallbtn" onclick="editTask('${t.id}')">수정</button><button class="smallbtn done" onclick="completeTask('${t.id}')">완료</button></div></div><div class="meta"><span class="mono">${over?'마감 초과':fmtDur(r)+' 남음'}</span>${d?`<span>예상 소요 ${fmtWork(d)}</span>`:''}<span>시작 마지노선 ${datefmt(new Date(new Date(t.due)-d*60000))}</span></div><div class="barline"><span>MISSION HP</span><span style="color:${color}">${over?'GAME OVER':Math.round(p)+'%'}</span></div><div class="track"><div class="fill" style="width:${p}%;background:${color}"></div></div><div class="task-bottom"><span>${esc(t.type)}${t.amount?` · ${t.amount}${esc(t.unit||'개')}`:''}</span><button class="guide-link" onclick="openGuide('${t.id}')">자료·쟁점 올리고 작성 팁 보기　↗</button></div></article>`}).join(''):'<div class="empty"><strong>아직 등록된 과제가 없어요.</strong>첫 과제를 추가해 보세요!</div>';
-$('archiveList').innerHTML=done.length?done.map(t=>`<div class="archive-card"><div><strong>${esc(t.name)}</strong><small>${esc(t.type)} · 완료 ${t.completedAt?datefmt(t.completedAt):''}</small></div><div class="archive-actions"><label><input type="checkbox" value="${t.id}" onchange="updateSelection()"> 선택</label><button class="smallbtn" onclick="removeOne('${t.id}')">삭제</button></div></div>`).join(''):'<div class="tip" style="padding:8px">완료한 과제가 여기에 모입니다.</div>';updateSelection()}
-function updateSelection(){let n=document.querySelectorAll('#archiveList input:checked').length;let b=$('deleteSelected');b.textContent=`선택 삭제 (${n})`;b.disabled=!n}
-document.querySelectorAll('.type').forEach(b=>b.onclick=()=>{document.querySelectorAll('.type').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedType=b.dataset.type;$('unitLabel').textContent='('+b.dataset.unit+')';$('rate').value=b.dataset.min;$('rate').placeholder=b.dataset.min||'분';estimate()});function estimate(){let a=+$('amount').value,r=+$('rate').value;$('estimate').textContent=a>0&&r>0?`예상 소요 ${fmtWork(a*r)}`:'예상 소요 —'}$('amount').oninput=estimate;$('rate').oninput=estimate;
-function clearErrors(){['nameError','dueError','amountError','rateError'].forEach(id=>$(id).textContent='');$('formMsg').textContent=''}function resetForm(){editing=null;$('taskForm').reset();$('formTitle').textContent='＋ 과제 빠른 등록';$('submitBtn').textContent='추가';$('editActions').hidden=true;document.querySelectorAll('.type').forEach(x=>x.classList.toggle('active',x.dataset.type==='보고서'));selectedType='보고서';$('unitLabel').textContent='(쪽)';$('rate').value=40;estimate();clearErrors()}function cancelEdit(){resetForm()}function editTask(id){let t=tasks.find(x=>x.id===id);if(!t)return;editing=id;selectedType=t.type;document.querySelectorAll('.type').forEach(x=>x.classList.toggle('active',x.dataset.type===t.type));$('name').value=t.name;$('due').value=t.due.slice(0,16);$('amount').value=t.amount||'';$('rate').value=t.rate||'';$('unitLabel').textContent='('+t.unit+')';$('formTitle').textContent='✎ 과제 수정';$('submitBtn').textContent='수정 저장';$('editActions').hidden=false;estimate();clearErrors();window.scrollTo({top:0,behavior:'smooth'})}
-$('taskForm').onsubmit=e=>{e.preventDefault();clearErrors();let name=$('name').value.trim(),due=$('due').value,amount=$('amount').value,rate=$('rate').value,valid=true;if(!name){$('nameError').textContent='과제 이름을 입력해 주세요.';valid=false}else if(name.length>30){$('nameError').textContent='과제 이름은 30자까지 입력할 수 있어요.';valid=false}if(!due){$('dueError').textContent='마감 날짜와 시간을 선택해 주세요.';valid=false}else if(new Date(due)<=Date.now()&&!editing){$('dueError').textContent='이미 지난 시간이에요. 앞으로의 마감일을 골라 주세요.';valid=false}if((amount||rate)&&(!(Number(amount)>0)||!(Number(rate)>0))){$('amountError').textContent='분량과 걸리는 시간을 1 이상의 숫자로 둘 다 입력해 주세요.';valid=false}if(!valid){$('formMsg').textContent='빨간 안내가 있는 칸을 확인해 주세요.';return}let old=editing&&tasks.find(x=>x.id===editing),unit=document.querySelector('.type.active')?.dataset.unit||'개';let t={id:editing||crypto.randomUUID(),type:selectedType,name,due:new Date(due).toISOString(),amount:amount?Number(amount):'',rate:rate?Number(rate):'',unit,done:false};if(old){t.done=old.done;tasks=tasks.map(x=>x.id===editing?t:x)}else tasks.push(t);save();render();$('formMsg').textContent=`'${name}' 과제를 ${old?'수정':'추가'}했어요.`;resetForm();$('formMsg').textContent=`'${name}' 과제를 ${old?'수정':'추가'}했어요.`;setTimeout(()=>$('formMsg').textContent='',3500)};
-function completeTask(id){let t=tasks.find(x=>x.id===id);if(t){t.done=true;t.completedAt=new Date().toISOString();save();render()}}function deleteSelected(){let ids=[...document.querySelectorAll('#archiveList input:checked')].map(x=>x.value);if(!ids.length)return;removeIds(ids)}function removeOne(id){removeIds([id])}function removeIds(ids){undoItems=tasks.filter(t=>ids.includes(t.id));tasks=tasks.filter(t=>!ids.includes(t.id));save();render();showToast(`${ids.length}개 과제를 삭제했어요.`)}function showToast(text){clearTimeout(undoTimer);$('toastText').textContent=text;$('toast').classList.add('show');let b=$('toast').querySelector('.toastbar');b.style.animation='none';void b.offsetWidth;b.style.animation='shrink 8s linear forwards';undoTimer=setTimeout(()=>{$('toast').classList.remove('show');undoItems=null},8000)}function undoDelete(){if(undoItems){tasks.push(...undoItems);save();render()}$('toast').classList.remove('show');clearTimeout(undoTimer);undoItems=null}
-function openGuide(id){let t=tasks.find(x=>x.id===id);if(!t)return;$('guideTitle').textContent=t.name;$('guideHP').textContent=Math.round(hp(t))+'%';$('guideDue').textContent=remaining(t)<=0?'GAME OVER':fmtDur(remaining(t));$('guide').classList.add('open')}function closeGuide(){$('guide').classList.remove('open')}function updateClock(){let d=new Date();$('clock').textContent=d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false})+' KST';$('today').textContent=d.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});render()}load();render();updateClock();setInterval(updateClock,60000);
-</script></body></html>
+{
+/* ---------- tested logic carried over from the first prototype ---------- */
+const L = {
+  toLocalInput(ts) {
+    var d = new Date(ts), pad = function (n) { return String(n).padStart(2, '0'); };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  },
+  analyzeText(text) {
+  var clean = String(text || '').replace(/\r/g, '').replace(/https?:\/\/\S+|www\.\S+/g, ' ').replace(/[ \t ]+/g, ' ');
+  var lines = clean.split('\n').map(function (l) { return l.trim(); });
+  var lc = {};
+  lines.forEach(function (l) { if (l) lc[l] = (lc[l] || 0) + 1; });
+  lines = lines.filter(function (l) { return l && lc[l] < 3 && !/^(출처|source|참고)\s*[:：]?\s*$/i.test(l) && !/^(출처|source)\s*[:：]/i.test(l) && !/^\d+$/.test(l); });
+  var joined = '';
+  lines.forEach(function (l) {
+    var bullet = /^[•\-–·●○■□▶►*]|^\d+[.)]\s|^[①-⑳]/.test(l);
+    if (!joined) joined = l;
+    else if (bullet || /[.!?。:：]$/.test(joined)) joined += '\n' + l;
+    else joined += ' ' + l;
+  });
+  var raw = joined.split(/(?<=[.!?。])\s+|\n+|\s[•●○■▶►]\s/);
+  var sents = [];
+  raw.forEach(function (s) {
+    s = s.trim().replace(/^[•\-–·●○■□▶►*\s]+/, '').replace(/^\d+[.)]\s*/, '');
+    if (s.length >= 12 && s.length <= 160 && /[가-힣A-Za-z]{2}/.test(s) && !/%[0-9A-F]{2}/.test(s)) sents.push(s);
+  });
+  var seenS = {};
+  sents = sents.filter(function (s) { if (seenS[s]) return false; seenS[s] = 1; return true; });
+  var stop = '그리고 그러나 하지만 그래서 또한 이것 그것 저것 있는 있다 없는 없다 하는 한다 했다 하기 위해 위한 대한 대해 통해 따라 같은 같이 경우 정도 이번 다음 모든 각각 가장 우리 여러 어떤 무엇 어떻게 위해서 에서 으로 이다 입니다 합니다 됩니다 있습니다 이를 이런 그런 하여 해서 하고 the and for with that this from are was you your page'.split(' ');
+  var stopSet = {};
+  stop.forEach(function (w) { stopSet[w] = 1; });
+  var josa = /(으로서|으로써|에서는|에게서|으로는|이라는|라는|에서|에게|으로|부터|까지|처럼|보다|하고|이나|이며|이고|이다|입니다|은|는|이|가|을|를|의|에|와|과|도|만|로|나|며|고)$/;
+  function toks(s) {
+    return (s.match(/[가-힣]{2,}|[A-Za-z][A-Za-z0-9+#]{1,}/g) || []).map(function (w) {
+      w = w.toLowerCase();
+      if (/[가-힣]/.test(w) && w.length > 2) w = w.replace(josa, '');
+      return w;
+    }).filter(function (w) { return w.length >= 2 && !stopSet[w]; });
+  }
+  var freq = {}, docf = {};
+  var st = sents.map(function (s) {
+    var t = toks(s), u = {};
+    t.forEach(function (w) { freq[w] = (freq[w] || 0) + 1; if (!u[w]) { u[w] = 1; docf[w] = (docf[w] || 0) + 1; } });
+    return t;
+  });
+  var N = Math.max(1, sents.length);
+  var keywords = Object.keys(freq).filter(function (w) { return freq[w] >= 2 && docf[w] < N * 0.6 + 1; })
+    .sort(function (a, b) { return freq[b] - freq[a]; }).slice(0, 8);
+  var kwSet = {};
+  keywords.forEach(function (w, i) { kwSet[w] = 8 - i; });
+  function overlap(a, b) { var A = {}, n = 0; a.forEach(function (w) { A[w] = 1; }); b.forEach(function (w) { if (A[w]) n++; }); return n / Math.max(1, Math.min(a.length, b.length)); }
+  var scored = sents.map(function (s, i) {
+    var t = st[i], sc = 0, u = {};
+    t.forEach(function (w) { if (!u[w]) { u[w] = 1; sc += Math.log(1 + (freq[w] || 0)) + (kwSet[w] ? 1 : 0); } });
+    sc = sc / Math.pow(Math.max(4, t.length), 0.6);
+    if (s.length < 20) sc *= 0.6;
+    if (/[→]{2,}|^[→]/.test(s)) sc *= 0.5;
+    return { i: i, s: s, sc: sc };
+  });
+  var picked = scored.slice().sort(function (a, b) { return b.sc - a.sc; });
+  var chosen = [];
+  for (var k = 0; k < picked.length && chosen.length < 4; k++) {
+    var c = picked[k];
+    if (!chosen.some(function (x) { return overlap(st[x.i], st[c.i]) > 0.5; })) chosen.push(c);
+  }
+  chosen.sort(function (a, b) { return a.i - b.i; });
+  var reqRe = /(\d+\s*(쪽|페이지|장|매|자|분|단어|슬라이드|page)|마감|제출|기한|분량|형식|APA|MLA|글꼴|폰트|줄\s*간격|평가|채점|배점|\d+\s*%|감점|필수)/i;
+  var reqs = sents.filter(function (s) { return reqRe.test(s); }).slice(0, 4);
+  return { summary: chosen.map(function (c) { return c.s; }), keywords: keywords, reqs: reqs, sentences: sents.slice(0, 300), chars: clean.length };
+},
+  guideSig(t) {
+    var src = JSON.stringify([t.type, t.amount, t.unit, t.content || '', t.issues || [], (t.files || []).map(function (f) { return [f.name, (f.summary || '').length, f.auto ? f.auto.chars : 0]; })]);
+    var h = 0;
+    for (var i = 0; i < src.length; i++) { h = (h * 31 + src.charCodeAt(i)) | 0; }
+    return String(h);
+  },
+  issueKeys(is) {
+    var josa = /(으로|에서|에게|은|는|이|가|을|를|의|에|와|과|도|로|한가|인가|할까)$/;
+    return (String(is).match(/[가-힣]{2,}|[A-Za-z]{2,}/g) || []).map(function (w) { w = w.toLowerCase(); return w.length > 2 ? w.replace(josa, '') : w; }).filter(function (w) { return w.length >= 2; });
+  },
+  findEvidence(t, is, max) {
+    var keys = this.issueKeys(is), found = [];
+    if (!keys.length) return found;
+    var pool = [];
+    (t.files || []).forEach(function (f) { if (f.auto) (f.auto.sentences || []).forEach(function (s) { pool.push({ s: s, src: f.name }); }); });
+    String(t.content || '').split(/\n|(?<=[.!?])\s+/).forEach(function (s) { s = s.trim(); if (s.length >= 8) pool.push({ s: s, src: '과제 내용' }); });
+    pool.forEach(function (p) {
+      var low = p.s.toLowerCase(), hit = 0;
+      keys.forEach(function (k) { if (low.indexOf(k) >= 0) hit++; });
+      if (hit) found.push({ hit: hit, s: p.s, src: p.src });
+    });
+    found.sort(function (a, b) { return b.hit - a.hit || a.s.length - b.s.length; });
+    var seen = {}, out = [];
+    found.forEach(function (x) { if (out.length < max && !seen[x.s]) { seen[x.s] = 1; out.push({ point: '“' + x.s.replace(/^[“”"']+|[“”"']+$/g, '') + '”', source: x.src }); } });
+    return out;
+  },
+  ruleGuide(t) {
+    var self = this, type = t.type || '기타';
+    var issues = (t.issues || []).slice();
+    var content = String(t.content || '').trim();
+    var autoKw = [];
+    (t.files || []).forEach(function (f) { if (f.auto) (f.auto.keywords || []).forEach(function (k) { if (autoKw.indexOf(k) < 0) autoKw.push(k); }); });
+    var guessed = false;
+    if (!issues.length && autoKw.length >= 2) { issues = autoKw.slice(0, 2).map(function (k) { return k + '의 의미와 과제 주제와의 관계'; }); guessed = true; }
+    var frame = function (is) {
+      if (/관계|상관|영향|효과|요인/.test(is)) return {
+        q: '“' + is + '”에서 원인과 결과는 무엇이고, 그 관계를 자료로 보여 줄 수 있는가?',
+        a: ['원인(설명하는 쪽)과 결과(설명되는 쪽)를 먼저 한 문장씩 정의하세요.', '상관관계와 인과관계를 구분해 쓰세요. “함께 움직인다”와 “때문이다”는 다른 주장이에요.', '결과에 영향을 줄 수 있는 다른 요인(제3의 변수)을 하나 이상 짚어 주세요.'],
+        c: '“우연이거나 다른 요인 때문 아니냐”는 반론이 나올 수 있어요. 통제한 변수나 자료의 한계를 먼저 밝혀 두면 방어돼요.',
+        h: '현상 → 관계를 보여 주는 자료(표·수치) → 해석 → 한계 순서로 한 단락씩 쓰세요.' };
+      if (/비교|차이|대비|vs/i.test(is)) return {
+        q: '“' + is + '”를 어떤 기준으로 비교하고, 그 차이는 왜 생기는가?',
+        a: ['비교 기준을 3개 정하고 표로 먼저 정리하세요.', '공통점보다 차이점과 그 원인에 분량을 더 쓰세요.', '어느 쪽이 더 낫다고 말하려면 판단 기준을 먼저 밝히세요.'],
+        c: '“비교 기준이 한쪽에 유리하다”는 반론에 대비해, 기준을 고른 이유를 한 문장 덧붙이세요.',
+        h: '비교표 1개 → 기준별 해석 → 종합 판단 순서로 쓰면 읽기 쉬워요.' };
+      if (/문제|한계|위기|원인|해결|개선|방안/.test(is)) return {
+        q: '“' + is + '”의 실제 모습은 어떻고, 원인과 현실적인 해결책은 무엇인가?',
+        a: ['문제를 사례나 수치로 먼저 보여 주세요.', '원인을 구조적 요인과 개인·조직 요인으로 나눠 분석하세요.', '대안은 1~2개만, 실행 주체와 예상 효과까지 구체적으로 쓰세요.'],
+        c: '“대안이 비현실적이다”라는 반론에 대비해 비용·실행 가능성을 한 줄 언급하세요.',
+        h: '문제 제기 → 원인 분석 → 대안 → 대안의 한계 순서로 쓰세요.' };
+      if (/[?？]$|가$|는가|할까|인가|충분|타당|옳/.test(is)) return {
+        q: '“' + is.replace(/[?？]$/, '') + '”에 대해 나는 어떤 입장이며, 가장 강한 근거는 무엇인가?',
+        a: ['찬성·반대 입장을 각각 한 문장으로 먼저 정리하세요.', '내 입장을 정하고, 자료에서 가장 강한 근거 2개를 고르세요.', '판단 기준(예: 수치 기준, 이론, 사례)을 명확히 밝히세요.'],
+        c: '상대 입장의 가장 강한 논거를 먼저 인정한 뒤 “그럼에도 …”로 재반박하면 설득력이 커져요.',
+        h: '입장 → 근거 1 → 근거 2 → 반론과 재반박 → 소결 순서로 쓰세요.' };
+      return {
+        q: '“' + is + '”란 무엇이고, 이 과제에서 왜 중요한가?',
+        a: ['핵심 개념을 정의하고 다룰 범위를 좁히세요.', '현황이나 구체적인 사례 1~2개로 설명하세요.', '분석 결과가 과제 주제에 주는 의미(시사점)로 마무리하세요.'],
+        c: '“정의가 모호하다”는 지적을 피하려면 어떤 정의를 쓰는지 출처와 함께 밝히세요.',
+        h: '정의 → 사례 → 분석 → 시사점 순서로 쓰세요.' };
+    };
+    var gIssues = issues.slice(0, 4).map(function (is) {
+      var f = frame(is);
+      var ev = self.findEvidence(t, is, 2);
+      if (!ev.length) ev = [{ point: '이 쟁점을 직접 다룬 자료가 아직 없어요. 통계·논문·기사 중 1개를 찾아 올려 주세요.', source: '찾아야 할 자료' }];
+      return { issue: is, question: f.q, angles: f.a, evidence: ev, counter: f.c, how: f.h };
+    });
+    var n = gIssues.length || 1;
+    var outline = [];
+    if (type === 'PPT') {
+      var sl = t.amount > 0 ? t.amount : 12, core = Math.max(n, sl - 3);
+      outline.push({ part: '도입', amount: '2장', points: ['표지와 발표 목적 한 문장', '목차: 쟁점 ' + n + '개를 질문 형태로'] });
+      gIssues.forEach(function (g, i) { outline.push({ part: '본문 ' + (i + 1), amount: Math.max(1, Math.round(core / n)) + '장', points: ['제목에 결론 문장: ' + g.issue, '근거 그래프·표 1개', '청중이 기억할 한 줄'] }); });
+      outline.push({ part: '마무리', amount: '1장', points: ['쟁점별 결론 요약', '질문 받을 예상 질문 1~2개 준비'] });
+    } else if (type === '문제풀이') {
+      outline.push({ part: '개념 정리', amount: '15%', points: issues.length ? issues.slice(0, 3).map(function (x) { return x + ' 정의·공식 한 줄 정리'; }) : ['문제에 나오는 개념 목록 만들기'] });
+      outline.push({ part: '풀이', amount: '70%', points: ['쉬운 문제부터 풀고 막히면 표시 후 넘기기', '풀이 과정을 단계별로 남기기'] });
+      outline.push({ part: '검토', amount: '15%', points: ['표시한 문제 다시 풀기', '단위·부호·계산 실수 확인'] });
+    } else {
+      var pg = t.amount > 0 && (t.unit === '쪽' || t.unit === '장') ? t.amount : 0;
+      var intro = pg ? Math.max(1, Math.round(pg * 0.12)) : 0, body = pg ? Math.max(n, pg - intro * 2) : 0;
+      outline.push({ part: '서론', amount: pg ? intro + t.unit : '10%', points: [content ? '과제 배경과 문제 제기: ' + content.split(/[.\n]/)[0].slice(0, 60) : '주제를 고른 이유와 문제 제기', '글에서 다룰 쟁점 ' + n + '개 예고'] });
+      gIssues.forEach(function (g, i) { outline.push({ part: '본론 ' + (i + 1), amount: pg ? Math.max(1, Math.round(body / n)) + t.unit : Math.round(80 / n) + '%', points: [g.issue, g.how] }); });
+      outline.push({ part: '결론', amount: pg ? intro + t.unit : '10%', points: ['쟁점별 결론을 한 문장씩 요약', '한계와 앞으로의 과제'] });
+    }
+    var check = [];
+    content.split(/\n|,|\/|\.(?!\d)|(?=\d+\.\s)/).forEach(function (x) { x = x.replace(/^\s*\d+\.\s*/, '').trim(); if (x.length >= 4 && x.length <= 60 && check.length < 4) check.push(x + ' 반영했는가?'); });
+    (t.files || []).forEach(function (f) { if (f.auto) (f.auto.reqs || []).forEach(function (r) { if (check.length < 6 && r.length <= 70) check.push('자료 속 요구: ' + r); }); });
+    if (t.amount > 0) check.push('분량 ' + t.amount + t.unit + '을 맞췄는가?');
+    check.push(type === 'PPT' ? '슬라이드마다 메시지가 한 개인가?' : '인용한 자료마다 출처를 같은 형식으로 달았는가?');
+    check.push('제목·쪽 번호·이름(학번)을 넣었는가?');
+    var next = !(t.files || []).length ? '쟁점별로 근거 자료를 1개씩 찾아 올리세요.' : (!(t.issues || []).length ? '과제에서 답해야 할 질문 2~3개를 쟁점으로 추가하세요.' + (guessed ? ' 지금은 자료의 핵심어로 임시 쟁점을 만들었어요.' : '') : '위 구성안대로 소제목만 먼저 적고, 쟁점 1의 근거 문장을 붙여 넣는 것부터 시작하세요.');
+    var summary = content ? content.split(/\n/)[0].slice(0, 140) : (type + ' 과제' + (t.amount > 0 ? ' · ' + t.amount + t.unit : '') + (issues.length ? ' · 쟁점: ' + issues.join(', ') : ''));
+    return { summary: summary, issues: gIssues, outline: outline, checklist: check.slice(0, 8), next: next };
+  },
+  normalizeGuide(g) {
+    if (!g || typeof g !== 'object') return null;
+    var str = function (x, n) { return String(x == null ? '' : x).replace(/\s+/g, ' ').trim().slice(0, n || 400); };
+    var arr = function (x, n) { return Array.isArray(x) ? x.slice(0, n) : []; };
+    var issues = arr(g.issues, 4).map(function (i) {
+      return { issue: str(i && i.issue, 80), question: str(i && i.question), angles: arr(i && i.angles, 3).map(function (a) { return str(a); }).filter(Boolean),
+        evidence: arr(i && i.evidence, 3).map(function (e) { return { point: str(e && (e.point || e), 300), source: str(e && e.source, 60) || '자료' }; }).filter(function (e) { return e.point; }),
+        counter: str(i && i.counter), how: str(i && i.how) };
+    }).filter(function (i) { return i.issue; });
+    var outline = arr(g.outline, 7).map(function (o) { return { part: str(o && o.part, 30), amount: str(o && o.amount, 20), points: arr(o && o.points, 4).map(function (p) { return str(p, 200); }).filter(Boolean) }; }).filter(function (o) { return o.part; });
+    if (!issues.length && !outline.length) return null;
+    return { summary: str(g.summary, 300), issues: issues, outline: outline, checklist: arr(g.checklist, 8).map(function (c) { return str(c, 160); }).filter(Boolean), next: str(g.next, 240) };
+  },
+  buildTips(t, now) {
+    var self = this;
+    var tips = [];
+    var issues = t.issues || [], files = t.files || [], content = (t.content || '').trim();
+    var needMin = (t.amount > 0 && t.per > 0) ? t.amount * t.per : 0;
+    var type = t.type || '기타';
+    if (needMin) {
+      var start = Math.max(now, t.due - needMin * 60000);
+      var span = t.due - start;
+      var p = type === 'PPT' ? [0.3, 0.75] : (type === '문제풀이' ? [0.15, 0.85] : [0.3, 0.8]);
+      var lab = type === 'PPT' ? ['스토리라인 확정', '슬라이드 제작 완료'] : (type === '문제풀이' ? ['개념 정리', '전체 풀이 완료'] : ['자료 정리', '초안 완성']);
+      tips.push({ title: '일정 쪼개기', body: lab[0] + ' ' + self.fmtWhen(start + span * p[0]) + ' → ' + lab[1] + ' ' + self.fmtWhen(start + span * p[1]) + ' → 남은 시간은 검토와 제출에 쓰세요.' });
+    }
+    if (type === '보고서') {
+      var pages = t.amount > 0 && t.unit === '쪽' ? t.amount : 0;
+      if (pages) {
+        var intro = Math.max(1, Math.round(pages * 0.1));
+        var body = Math.max(1, pages - intro * 2);
+        tips.push({ title: '분량 배분', body: '서론 ' + intro + '쪽 · 본론 ' + body + '쪽 · 결론 ' + intro + '쪽으로 잡으세요.' + (issues.length ? ' 본론은 쟁점 ' + issues.length + '개로 나눠 각각 약 ' + Math.max(1, Math.round(body / issues.length)) + '쪽씩 쓰면 균형이 맞아요.' : '') });
+      }
+    } else if (type === 'PPT') {
+      var slides = t.amount > 0 && t.unit === '장' ? t.amount : 0;
+      if (slides) {
+        var core = Math.max(1, slides - 3);
+        tips.push({ title: '슬라이드 배분', body: '표지 1 · 목차 1 · 본문 ' + core + ' · 결론 1장.' + (issues.length ? ' 쟁점 ' + issues.length + '개에 본문을 약 ' + Math.max(1, Math.round(core / issues.length)) + '장씩 나눠 주세요.' : '') });
+      }
+      tips.push({ title: '한 장에 한 메시지', body: '슬라이드 제목을 결론 문장으로 쓰고, 글은 3줄 이내로 줄인 뒤 나머지는 발표 대본에 넣으세요.' });
+    } else if (type === '문제풀이') {
+      tips.push({ title: '푸는 순서', body: '전체를 훑어보고 쉬운 문제부터 푸세요. 막히는 문제는 5분 넘기면 표시만 하고 넘어가요.' });
+    } else {
+    }
+    if (!issues.length) tips.push({ title: '쟁점을 먼저 정하세요', body: '과제에서 꼭 다뤄야 할 질문 2~3개를 쟁점으로 추가하면 구성과 분량 팁이 쟁점별로 나와요.' });
+    tips = tips.concat(self.fileTips(t).filter(function (x) { return x.title.indexOf('읽지 못한') === 0; }));
+    if (!files.length) tips.push({ title: '근거 자료가 없어요', body: '쟁점마다 출처가 분명한 자료를 1개 이상 찾아 올려 두세요.' });
+    if (!content) tips.push({ title: '요구사항을 적어 두세요', body: '분량·형식·평가 기준을 적어 두면 마지막 검토 때 빠뜨린 것이 없는지 대조할 수 있어요.' });
+    else if (/평가|기준|채점/.test(content)) tips.push({ title: '평가 기준으로 검토', body: '적어 둔 평가 기준을 체크리스트로 바꿔, 제출 전에 항목마다 어디에 반영했는지 확인하세요.' });
+    return tips;
+  },
+  aiErrorText(code) {
+    var map = {
+      not_granted: 'AI 사용이 허용되지 않았어요. 이 화면에서는 AI 기능을 쓸 수 없어요.',
+      sampling_disabled: '이 계정에서는 AI를 쓸 수 없어요.',
+      capability_disabled: '이 화면에서는 AI를 쓸 수 없어요.',
+      not_declared: '이 화면에서는 AI를 쓸 수 없어요.',
+      rate_limited: '요청이 많아요. 잠시 뒤에 다시 눌러 주세요.',
+      session_expired: '다시 로그인한 뒤 시도해 주세요.',
+      prompt_too_large: '자료가 너무 길어요. 일부만 올려 주세요.',
+      image_rejected: '이 이미지는 읽을 수 없어요. 다른 파일로 올려 주세요.',
+      images_unavailable: '이 화면에서는 이미지를 AI에게 보낼 수 없어요.',
+      refused: 'AI가 이 요청에는 답하지 않았어요. 질문을 바꿔 보세요.',
+      empty_completion: '답이 비어 있어요. 질문을 조금 바꿔 보세요.'
+    };
+    return map[code] || '연결이 잠시 끊겼어요. 다시 시도해 주세요.';
+  },
+  taskContext(t) {
+    var lines = ['과제 이름: ' + t.name, '유형: ' + (t.type || '기타'), '마감: ' + this.fmtWhen(t.due)];
+    if (t.amount > 0 && t.per > 0) lines.push('분량: ' + t.amount + t.unit + ' (예상 소요 ' + this.fmtNeed(t.amount * t.per) + ')');
+    if ((t.content || '').trim()) lines.push('과제 내용·요구사항: ' + t.content.trim().slice(0, 2000));
+    if ((t.issues || []).length) lines.push('주요 쟁점: ' + t.issues.join(' / '));
+    (t.files || []).forEach(function (f) {
+      lines.push('참고 자료 "' + f.name + '"' + (f.summary ? ' 요약: ' + f.summary.slice(0, 1500) : ''));
+    });
+    return lines.join('\n');
+  },
+  async unzip(file, want) {
+    var buf = new Uint8Array(await file.arrayBuffer());
+    var dv = new DataView(buf.buffer);
+    var eocd = -1;
+    for (var i = buf.length - 22; i >= Math.max(0, buf.length - 66000); i--) { if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; } }
+    if (eocd < 0) throw new Error('not a zip');
+    var count = dv.getUint16(eocd + 10, true), p = dv.getUint32(eocd + 16, true);
+    var dec = new TextDecoder(), out = {};
+    for (var k = 0; k < count; k++) {
+      if (dv.getUint32(p, true) !== 0x02014b50) break;
+      var method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true);
+      var nlen = dv.getUint16(p + 28, true), xlen = dv.getUint16(p + 30, true), clen = dv.getUint16(p + 32, true), loc = dv.getUint32(p + 42, true);
+      var name = dec.decode(buf.subarray(p + 46, p + 46 + nlen));
+      p += 46 + nlen + xlen + clen;
+      if (!want(name)) continue;
+      var start = loc + 30 + dv.getUint16(loc + 26, true) + dv.getUint16(loc + 28, true);
+      var data = buf.subarray(start, start + csize), bytes;
+      if (method === 0) bytes = data;
+      else if (method === 8 && typeof DecompressionStream === 'function') {
+        bytes = new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+      } else continue;
+      out[name] = dec.decode(bytes);
+    }
+    return out;
+  },
+  xmlText(xml, paraEnd) {
+    return xml.split(paraEnd).join('\n').replace(/<[^>]+>/g, '')
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+      .replace(/&#(\d+);/g, function (_, n) { return String.fromCharCode(Number(n)); }).replace(/&amp;/g, '&')
+      .replace(/[ \t]+/g, ' ').replace(/\n\s*\n+/g, '\n').trim();
+  },
+  async readOffice(file) {
+    var self = this, ext = file.name.split('.').pop().toLowerCase();
+    if (ext === 'docx') {
+      var d = await this.unzip(file, function (n) { return n === 'word/document.xml'; });
+      return d['word/document.xml'] ? this.xmlText(d['word/document.xml'].replace(/<w:tab\/>/g, ' '), '</w:p>') : '';
+    }
+    if (ext === 'pptx') {
+      var sl = await this.unzip(file, function (n) { return /^ppt\/slides\/slide\d+\.xml$/.test(n); });
+      return Object.keys(sl).sort(function (a, b) { return parseInt(a.replace(/\D/g, ''), 10) - parseInt(b.replace(/\D/g, ''), 10); })
+        .map(function (n) { return '[슬라이드 ' + n.replace(/\D/g, '') + ']\n' + self.xmlText(sl[n], '</a:p>'); }).join('\n');
+    }
+    if (ext === 'xlsx') {
+      var x = await this.unzip(file, function (n) { return n === 'xl/sharedStrings.xml'; });
+      return x['xl/sharedStrings.xml'] ? this.xmlText(x['xl/sharedStrings.xml'], '</si>') : '';
+    }
+    if (ext === 'hwpx') {
+      var h = await this.unzip(file, function (n) { return /^Contents\/section\d+\.xml$/.test(n); });
+      return Object.keys(h).sort().map(function (n) { return self.xmlText(h[n], '</hp:p>'); }).join('\n');
+    }
+    return '';
+  },
+  async readPdf(file) {
+    var lib = null;
+    for (var w = 0; w < 40 && !lib; w++) {
+      lib = globalThis.pdfjsLib || null;
+      if (!lib) await new Promise(function (r) { setTimeout(r, 250); });
+    }
+    if (!lib) throw new Error('pdf reader not loaded');
+    var doc = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false, disableFontFace: true, useWorkerFetch: false }).promise;
+    var out = '';
+    for (var p = 1; p <= Math.min(doc.numPages, 60) && out.length < 60000; p++) {
+      var tc = await (await doc.getPage(p)).getTextContent();
+      out += tc.items.map(function (it) { return it.str + (it.hasEOL ? '\n' : ' '); }).join('') + '\n';
+    }
+    try { doc.destroy(); } catch (e) {}
+    return out;
+  },
+  autoText(f) {
+    var a = f.auto;
+    if (!a) return '';
+    var lines = [];
+    if (a.summary && a.summary.length) lines.push('핵심 문장\n' + a.summary.map(function (x) { return '- ' + x; }).join('\n'));
+    if (a.keywords && a.keywords.length) lines.push('핵심어: ' + a.keywords.slice(0, 6).join(', '));
+    if (a.reqs && a.reqs.length) lines.push('요구사항으로 보이는 문장\n' + a.reqs.slice(0, 2).map(function (x) { return '- ' + x; }).join('\n'));
+    return lines.join('\n\n');
+  },
+  fileTips(t) {
+    var self = this, tips = [];
+    var files = (t.files || []), issues = t.issues || [];
+    var read = files.filter(function (f) { return f.auto && f.auto.summary && f.auto.summary.length; });
+    var josa = /(으로|에서|에게|은|는|이|가|을|를|의|에|와|과|도|로)$/;
+    issues.forEach(function (is) {
+      var keys = (is.match(/[가-힣]{2,}|[A-Za-z]{2,}/g) || []).map(function (w) { w = w.toLowerCase(); return w.length > 2 ? w.replace(josa, '') : w; }).filter(function (w) { return w.length >= 2; });
+      if (!keys.length) return;
+      var best = null;
+      read.forEach(function (f) {
+        (f.auto.sentences || []).forEach(function (s) {
+          var low = s.toLowerCase(), hit = 0;
+          keys.forEach(function (k) { if (low.indexOf(k) >= 0) hit++; });
+          if (hit && (!best || hit > best.hit || (hit === best.hit && s.length < best.s.length))) best = { hit: hit, s: s, f: f.name };
+        });
+      });
+      if (best) tips.push({ title: '쟁점 "' + is + '"의 근거 후보', body: '“' + best.s.replace(/^[“”"']+|[“”"']+$/g, '') + '” — ' + best.f + '에서 찾았어요. 원문을 다시 확인하고 출처와 함께 인용하세요.' });
+      else if (read.length) tips.push({ title: '쟁점 "' + is + '" 근거가 부족해요', body: '올린 자료에서 이 쟁점과 직접 관련된 문장을 찾지 못했어요. 이 쟁점을 다룬 자료를 하나 더 찾아 올려 보세요.' });
+    });
+    read.forEach(function (f) {
+      if (f.auto.keywords && f.auto.keywords.length >= 3) tips.push({ title: '"' + f.name + '" 핵심어', body: f.auto.keywords.slice(0, 5).join(', ') + ' — 자주 나오는 말이에요. 본론 소제목이나 발표 키워드 후보로 써 보세요.' });
+    });
+    var reqs = [];
+    read.forEach(function (f) { (f.auto.reqs || []).forEach(function (r) { if (reqs.length < 2) reqs.push(r); }); });
+    if (reqs.length) tips.push({ title: '자료에서 찾은 요구사항', body: reqs.map(function (r) { return '“' + r.replace(/^[“”"']+|[“”"']+$/g, '') + '”'; }).join(' / ') + ' — 과제 내용 칸에 옮겨 두고 제출 전에 대조하세요.' });
+    var unread = files.filter(function (f) { return f.kind === 'other'; });
+    if (unread.length) tips.push({ title: '읽지 못한 자료 ' + unread.length + '개', body: unread.map(function (f) { return f.name; }).join(', ') + ' — 한글(.hwp)은 PDF나 .hwpx로 저장해 다시 올리면 내용을 읽을 수 있어요.' });
+    return tips;
+  },
+  fmtLeft(ms) {
+    var m = Math.floor(ms / 60000);
+    var d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
+    if (d > 0) return 'D-' + d + ' · ' + h + '시간 ' + mm + '분 남음';
+    return h + '시간 ' + mm + '분 남음';
+  },
+  fmtNeed(min) {
+    var h = Math.floor(min / 60), m = Math.round(min % 60);
+    if (h && m) return h + '시간 ' + m + '분';
+    if (h) return h + '시간';
+    return m + '분';
+  },
+  fmtWhen(ts) {
+    var d = new Date(ts);
+    var days = ['일', '월', '화', '수', '목', '금', '토'];
+    var hh = String(d.getHours()).padStart(2, '0'), mi = String(d.getMinutes()).padStart(2, '0');
+    return (d.getMonth() + 1) + '/' + d.getDate() + '(' + days[d.getDay()] + ') ' + hh + ':' + mi;
+  }
+};
+
+/* ---------- state ---------- */
+const H = 3600000, WEEK = 168 * H, KEY = 'assignment-timer-site-v1';
+const TYPES = {
+  '보고서': { unit: '쪽', per: 40, color: '#7dd3fc', hint: '쪽 수 × 1쪽 작성 시간' },
+  'PPT': { unit: '장', per: 20, color: '#fdba74', hint: '슬라이드 장 수 × 1장 제작 시간' },
+  '문제풀이': { unit: '문제', per: 5, color: '#c4b5fd', hint: '문제 수 × 1문제 풀이 시간' },
+  '기타': { unit: '개', per: 30, color: '#94a3b8', hint: '단위와 시간을 직접 정해요' }
+};
+const S = { tasks: [], nextId: 100, undo: null, sample: null, busy: {}, err: {}, stream: {}, reading: {}, editing: null, blocked: false, sel: {}, now: Date.now() };
+const blobs = {};
+const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const $ = s => document.querySelector(s);
+const need = t => (t.amount > 0 && t.per > 0) ? t.amount * t.per : 0;
+const byId = id => S.tasks.find(t => t.id === id);
+
+function seed() {
+  const n = Date.now();
+  const s = [
+    { id: 1, type: '보고서', name: '경영통계 팀플 보고서', due: n + 5 * H, amount: 12, unit: '쪽', per: 30, content: '국내 배달앱 이용률 설문 데이터를 회귀분석. A4 12쪽, 출처 APA, 평가 기준: 분석 타당성 40%', issues: ['표본 크기가 충분한가', '이용률과 소득의 상관관계'], files: [{ name: '조교 안내 공지.txt', size: 1240, kind: 'text', text: '[경영통계 팀플 보고서 안내]\n1. 주제: 배달앱 이용률에 영향을 주는 요인 분석\n2. 분량: A4 12쪽 내외, 표와 그림 포함\n3. 필수: 회귀분석 결과표, 가설 검정 해석, 한계점\n4. 출처 표기: APA 7판\n5. 평가: 분석 타당성 40%, 해석 30%, 구성 20%, 형식 10%' }] },
+    { id: 2, type: 'PPT', name: '마케팅 발표 PPT', due: n + 20 * H, amount: 15, unit: '장', per: 20 },
+    { id: 3, type: '문제풀이', name: '마케팅원론 퀴즈', due: n + 60 * H, amount: 20, unit: '문제', per: 3 },
+    { id: 4, type: '보고서', name: '교양 글쓰기 리포트', due: n + 216 * H, amount: 5, unit: '쪽', per: 40 },
+    { id: 5, type: '기타', name: '세계사의 이해 감상문', due: n - 3 * H, amount: 0, unit: '쪽', per: 0 },
+    { id: 6, type: '문제풀이', name: '미시경제 문제풀이', due: n - 30 * H, done: true, doneAt: n - 41 * H, amount: 15, unit: '문제', per: 10 },
+    { id: 7, type: 'PPT', name: '조별 중간발표 슬라이드', due: n - 50 * H, done: true, doneAt: n - 52 * H, amount: 10, unit: '장', per: 20 },
+    { id: 8, type: '보고서', name: '경영학원론 요약', due: n - 80 * H, done: true, doneAt: n - 77 * H, amount: 6, unit: '쪽', per: 25 }
+  ];
+  s.forEach(x => { x.sample = true; x.created = n - 72 * H; });
+  s[0].files[0].auto = L.analyzeText(s[0].files[0].text);
+  return s;
+}
+function load() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { S.blocked = true; }
+  S.tasks = Array.isArray(saved) && saved.length ? saved : seed();
+  S.nextId = Math.max(100, ...S.tasks.map(t => Number(t.id) || 0)) + 1;
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(S.tasks)); } catch (e) { S.blocked = true; $('#banner').hidden = false; }
+}
+function setTasks(list) { S.tasks = list; save(); render(); }
+function patch(id, p, quiet) { S.tasks = S.tasks.map(t => t.id === id ? Object.assign({}, t, p) : t); save(); if (!quiet) render(); }
+
+/* ---------- derived ---------- */
+function status(t) {
+  const left = t.due - S.now, nm = need(t);
+  const hp = Math.max(0, Math.min(100, Math.round(left / WEEK * 100)));
+  const over = !t.done && left <= 0;
+  const c = over ? 'var(--over)' : hp > 50 ? 'var(--safe)' : hp >= 20 ? 'var(--warn)' : 'var(--crit)';
+  const level = over ? 'over' : left <= 6 * H ? 'shake' : left <= 24 * H ? 'pulse' : '';
+  const slack = nm ? left - nm * 60000 : null;
+  return { left, nm, hp, over, c, level, slack, short: nm && !over && slack < 0, zero: nm ? t.due - nm * 60000 : null };
+}
+function emergency() {
+  const out = [];
+  S.tasks.filter(t => !t.done).forEach(t => {
+    const st = status(t);
+    if (st.over) return;
+    if (st.nm && st.slack <= 3 * H) out.push({ t, k: st.slack, why: st.slack < 0 ? '지금 시작해도 ' + L.fmtNeed(Math.ceil(-st.slack / 60000)) + ' 모자라요' : L.fmtNeed(Math.max(1, Math.floor(st.slack / 60000))) + ' 안에 시작해야 해요' });
+    else if (!st.nm && st.left <= 24 * H) out.push({ t, k: st.left, why: '마감까지 ' + L.fmtNeed(Math.floor(st.left / 60000)) + ' 남았어요' });
+  });
+  return out.sort((a, b) => a.k - b.k).slice(0, 3);
+}
+
+/* ---------- views ---------- */
+function typeTag(t) { const ty = TYPES[t.type] || TYPES['기타']; return '<span class="tag" style="--t:' + ty.color + '">' + esc(t.type || '기타') + '</span>'; }
+function hpBar(st) {
+  return '<div class="hp" style="--c:' + st.c + '"><span class="lbl">HP</span><div class="bar" role="progressbar" aria-label="남은 체력" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + st.hp + '"><i style="width:' + st.hp + '%"></i></div><span class="pct">' + st.hp + '%</span></div>';
+}
+function card(t) {
+  const st = status(t);
+  const cls = ['card', st.over ? 'over' : '', st.level === 'pulse' || st.level === 'shake' ? 'crit ' + st.level : ''].join(' ');
+  const badges = (st.over ? '<span class="badge b-over">GAME OVER</span>' : st.level === 'shake' ? '<span class="badge b-crit">긴급</span>' : st.level === 'pulse' ? '<span class="badge b-crit">위험</span>' : '') +
+    (st.short ? '<span class="badge b-crit">마지노선 초과! 시간 부족</span>' : '') + (t.sample ? '<span class="badge b-sample">예시</span>' : '');
+  const meta = st.nm && !st.over ? '<div class="c-meta"><span>예상 소요 <b class="num">' + L.fmtNeed(st.nm) + '</b></span><span>시작 마지노선 <b class="num">' + (st.short ? '이미 지났어요' : L.fmtWhen(st.zero)) + '</b></span></div>' : '';
+  const acts = st.over
+    ? '<button class="btn sm" data-act="edit" data-id="' + t.id + '">마감 미루기</button><button class="btn sm" data-act="done" data-id="' + t.id + '">뒤늦게 완료</button><button class="btn sm danger" data-act="del" data-id="' + t.id + '">삭제</button>'
+    : '<a class="btn sm ai" href="#guide-' + t.id + '">자료·작성 가이드</a><button class="btn sm" data-act="edit" data-id="' + t.id + '">수정</button><button class="btn sm primary" data-act="done" data-id="' + t.id + '">완료</button>';
+  return '<article class="' + cls + '"><div class="c-top">' + typeTag(t) + '<h3>' + esc(t.name) + '</h3>' + badges + '</div>' +
+    '<div class="c-time">' + (st.over ? '마감 ' + L.fmtWhen(t.due) + ' · 기한이 지났어요' : L.fmtLeft(st.left)) + '</div>' + hpBar(st) + meta + '<div class="c-act">' + acts + '</div></article>';
+}
+function formFields(p, d) {
+  const ty = TYPES[d.type] || TYPES['보고서'];
+  return '<div class="types" role="group" aria-label="과제 유형">' + Object.keys(TYPES).map(k => '<button type="button" data-type="' + k + '" aria-pressed="' + (d.type === k) + '" style="--t:' + TYPES[k].color + '">' + k + '</button>').join('') + '</div>' +
+    '<label class="f">과제 이름<input type="text" id="' + p + '-name" maxlength="40" placeholder="예: 경영통계 팀플 보고서" value="' + esc(d.name) + '"><span class="err" id="' + p + '-name-e"></span></label>' +
+    '<label class="f">마감 날짜와 시간<input type="datetime-local" id="' + p + '-due" value="' + esc(d.due) + '"><span class="err" id="' + p + '-due-e"></span></label>' +
+    '<label class="f">분량<span class="amt"><input type="number" min="1" inputmode="numeric" id="' + p + '-amount" placeholder="12" value="' + esc(d.amount) + '"><select id="' + p + '-unit" aria-label="단위">' + ['쪽', '장', '문제', '개'].map(u => '<option' + (u === d.unit ? ' selected' : '') + '>' + u + '</option>').join('') + '</select></span><span class="err" id="' + p + '-amount-e"></span></label>' +
+    '<label class="f">단위당 시간(분)<input type="number" min="1" inputmode="numeric" id="' + p + '-per" value="' + esc(d.per) + '"><span class="err"></span></label>' +
+    '<button class="btn primary sub" type="submit" style="align-self:center">' + (S.editing && p === 'm' ? '수정 저장' : '추가') + '</button>' +
+    '<div class="calc"><span>' + esc(ty.hint) + ' = 예상 소요 <b id="' + p + '-calc">—</b></span><span id="' + p + '-msg" role="status"></span></div>';
+}
+function viewDashboard() {
+  const active = S.tasks.filter(t => !t.done).sort((a, b) => (status(a).over - status(b).over) || a.due - b.due);
+  const emg = emergency();
+  const samples = S.tasks.filter(t => t.sample).length;
+  const totalNeed = active.reduce((s, t) => s + (status(t).over ? 0 : need(t)), 0);
+  const danger = active.filter(t => { const st = status(t); return !st.over && st.left <= 24 * H; }).length;
+  const nearest = active.find(t => !status(t).over);
+  const emgHTML = emg.length
+    ? '<div class="emg"><div class="emg-head"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg><h2>지금 시작해야 할 과제</h2></div><div class="emg-grid">' +
+      emg.map(e => '<a class="emg-item" href="#guide-' + e.t.id + '"><div class="c-top">' + typeTag(e.t) + '<h3>' + esc(e.t.name) + '</h3></div><span class="why">' + esc(e.why) + '</span>' + hpBar(status(e.t)) + '<span class="zero">마감 ' + L.fmtWhen(e.t.due) + (need(e.t) ? ' / 예상 소요 ' + L.fmtNeed(need(e.t)) : '') + '</span></a>').join('') + '</div></div>'
+    : '<div class="emg calm"><div class="emg-head"><h2>지금 당장 시작할 과제는 없어요</h2></div><p class="muted" style="margin:0">' + (nearest ? '가장 가까운 마감은 ' + esc(nearest.name) + ', ' + esc(L.fmtLeft(nearest.due - S.now)) + '이에요.' : '새 과제를 추가하면 여기에 우선순위가 나타나요.') + '</p></div>';
+  return '<section class="band"><div class="wrap"><div class="hero-row"><h1>지금 무엇부터 할까요</h1><div class="stats"><span class="stat">진행 중<b>' + active.length + '</b></span><span class="stat">24시간 안 마감<b>' + danger + '</b></span><span class="stat">남은 작업<b>' + (totalNeed ? L.fmtNeed(totalNeed) : '0분') + '</b></span></div></div>' + emgHTML + '</div></section>' +
+    '<section class="band" style="padding-top:0"><div class="wrap"><h2 style="margin-bottom:10px">빠른 등록</h2><form class="quick" id="quick" novalidate>' + formFields('q', S.qf) + '</form></div></section>' +
+    '<section class="band" style="padding-top:0"><div class="wrap"><div class="hero-row" style="margin-bottom:12px"><h2>진행 중인 과제</h2><span class="muted small">마감 빠른 순, 1분마다 갱신</span></div>' +
+    (samples ? '<div class="note"><span>지금 보이는 과제 중 ' + samples + '개는 사용법을 보여 주는 예시예요.</span><button class="btn sm" type="button" data-act="clearSamples">예시 지우기</button></div>' : '') +
+    (active.length ? '<div class="list">' + active.map(card).join('') + '</div>' : '<div class="empty">아직 등록된 과제가 없어요. 첫 과제를 추가해 보세요!</div>') + '</div></section>' +
+    '<footer class="band"><div class="wrap legend"><span style="--c:var(--safe)"><i></i>HP 50% 초과 · 여유</span><span style="--c:var(--warn)"><i></i>HP 20~50% · 계획 세울 때</span><span style="--c:var(--crit)"><i></i>HP 20% 미만 · 24시간 안이면 깜빡임, 6시간 안이면 흔들림</span><span style="--c:var(--over)"><i></i>GAME OVER · 기한 초과</span></div></footer>';
+}
+function viewArchive() {
+  const done = S.tasks.filter(t => t.done).sort((a, b) => (b.doneAt || 0) - (a.doneAt || 0));
+  const over = S.tasks.filter(t => !t.done && t.due <= S.now);
+  const onTime = done.filter(t => !t.doneAt || t.doneAt <= t.due);
+  const total = done.length + over.length;
+  const rate = total ? Math.round(onTime.length / total * 100) : 0;
+  const saved = onTime.reduce((s, t) => s + Math.max(0, t.due - (t.doneAt || t.due)), 0);
+  const C = 2 * Math.PI * 42;
+  const selN = done.filter(t => S.sel[t.id]).length;
+  const allSel = done.length && selN === done.length;
+  return '<section class="band"><div class="wrap"><h1>완료 과제 아카이브</h1><div class="arc"><div class="donut"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="none" stroke="#31394d" stroke-width="10"/><circle cx="50" cy="50" r="42" fill="none" stroke="var(--clear)" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + (C * rate / 100) + ' ' + C + '"/></svg><div><b>' + rate + '%</b><span class="muted small">생존율</span></div></div>' +
+    '<dl class="meta" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div><dt>기한 안에 클리어</dt><dd>' + onTime.length + '개</dd></div><div><dt>GAME OVER</dt><dd>' + (over.length + done.length - onTime.length) + '개</dd></div><div><dt>마감 전에 남긴 시간</dt><dd>' + L.fmtNeed(Math.round(saved / 60000)) + '</dd></div></dl></div></div></section>' +
+    '<section class="band" style="padding-top:0"><div class="wrap"><div class="toolbar"><h2>CLEAR! 리스트</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" type="button" data-act="selAll"' + (done.length ? '' : ' disabled') + '>' + (allSel ? '선택 해제' : '완료 전체 선택') + '</button><button class="btn sm danger" type="button" data-act="delSel"' + (selN ? '' : ' disabled') + '>선택 삭제 (' + selN + ')</button></div></div>' +
+    (done.length ? done.map(t => { const late = t.doneAt && t.doneAt > t.due; const m = t.doneAt ? Math.abs(t.due - t.doneAt) : 0; return '<label class="row' + (S.sel[t.id] ? ' sel' : '') + '"><input type="checkbox" class="chk" data-sel="' + t.id + '"' + (S.sel[t.id] ? ' checked' : '') + ' style="width:20px;height:20px;accent-color:var(--clear)"><span><span class="c-top">' + typeTag(t) + '<b>' + esc(t.name) + '</b><span class="badge ' + (late ? 'b-warn">늦은 클리어' : 'b-sample" style="color:var(--clear)">CLEAR!') + '</span></span><span class="when">' + (t.doneAt ? '완료 ' + L.fmtWhen(t.doneAt) + ' / 마감보다 ' + L.fmtNeed(Math.round(m / 60000)) + (late ? ' 늦게' : ' 일찍') : '') + '</span></span><button class="btn sm ghost" type="button" data-act="undone" data-id="' + t.id + '">진행 중으로</button></label>'; }).join('') : '<div class="empty">아직 클리어한 과제가 없어요.</div>') + '</div></section>' +
+    '<section class="band" style="padding-top:0"><div class="wrap"><h2 style="margin-bottom:12px">GAME OVER</h2>' +
+    (over.length ? over.map(t => '<div class="row"><span>' + typeTag(t) + '</span><span><b>' + esc(t.name) + '</b><span class="when" style="display:block">마감 ' + L.fmtWhen(t.due) + ' / ' + L.fmtNeed(Math.round((S.now - t.due) / 60000)) + ' 지남</span></span><span style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" type="button" data-act="done" data-id="' + t.id + '">뒤늦게 완료</button><button class="btn sm danger" type="button" data-act="del" data-id="' + t.id + '">삭제</button></span></div>').join('') : '<div class="empty">기한을 넘긴 과제가 없어요. 이대로 가요.</div>') + '</div></section>';
+}
+function viewGuide(t) {
+  return '<section class="band"><div class="wrap"><a class="back" href="#dashboard">대시보드로</a><div class="c-top">' + typeTag(t) + '<h1>' + esc(t.name) + '</h1></div><div class="ws-hud" id="wsHud"></div></div></section>' +
+    '<section class="band" style="padding-top:0"><div class="wrap ws"><div class="panel"><h2>과제 정보와 자료</h2>' +
+    '<label class="f">과제 내용·요구사항<textarea id="wContent" rows="4" placeholder="예: 국내 기업 ESG 사례 1개 분석, A4 10쪽, 출처 APA">' + esc(t.content || '') + '</textarea></label>' +
+    '<div class="f" style="display:flex;flex-direction:column;gap:6px"><label class="f" for="wIssue">주요 쟁점</label><div class="issue-in"><input type="text" id="wIssue" placeholder="쟁점을 쓰고 Enter"><button class="btn" type="button" data-act="addIssue">추가</button></div><div class="chips" id="wIssues"></div></div>' +
+    '<label class="drop" id="drop"><input type="file" id="wFile" multiple>파일을 끌어다 놓거나 눌러서 고르세요<span class="small muted" style="display:block;margin-top:4px">PDF, 워드, PPT, 엑셀, 한글(.hwpx), 텍스트, 이미지</span></label>' +
+    '<div id="wFiles" style="display:flex;flex-direction:column;gap:8px"></div><h2 style="margin-top:6px">일정·분량 팁</h2><div id="wTips" style="display:flex;flex-direction:column;gap:8px"></div></div>' +
+    '<div class="panel" id="wGuide"></div></div></section>';
+}
+function renderHud(t) {
+  const st = status(t), C = 2 * Math.PI * 42;
+  const buf = st.nm ? st.slack : null;
+  $('#wsHud').innerHTML = '<div class="dial" style="--c:' + st.c + '"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="none" stroke="#31394d" stroke-width="9"/><circle cx="50" cy="50" r="42" fill="none" stroke="' + st.c + '" stroke-width="9" stroke-dasharray="' + (C * st.hp / 100) + ' ' + C + '"/></svg><div><b style="color:' + st.c + '">' + st.hp + '%</b><span>HP</span></div></div>' +
+    '<dl class="meta"><div><dt>남은 시간</dt><dd>' + (st.over ? '기한 지남' : L.fmtLeft(st.left).replace(' 남음', '')) + '</dd></div><div><dt>예상 소요</dt><dd>' + (st.nm ? L.fmtNeed(st.nm) : '분량 미입력') + '</dd></div><div><dt>여유 버퍼</dt><dd style="color:' + (buf == null ? 'var(--sub)' : buf < 0 ? 'var(--crit)' : buf <= 3 * H ? 'var(--warn)' : 'var(--safe)') + '">' + (buf == null ? '—' : (buf < 0 ? '−' : '') + L.fmtNeed(Math.round(Math.abs(buf) / 60000))) + '</dd></div><div><dt>시작 마지노선</dt><dd>' + (st.nm ? L.fmtWhen(st.zero) : '—') + '</dd></div></dl>';
+}
+function renderSources(t) {
+  $('#wIssues').innerHTML = (t.issues || []).map((is, i) => '<span class="chip">' + esc(is) + '<button type="button" data-act="rmIssue" data-i="' + i + '" aria-label="' + esc(is) + ' 쟁점 삭제">×</button></span>').join('') || '<span class="small muted">쟁점을 2~3개 적으면 쟁점별 분석이 나와요.</span>';
+  $('#wFiles').innerHTML = (S.reading[t.id] ? '<p class="status">자료를 읽고 요약하는 중이에요...</p>' : '') + (t.files || []).map((f, i) => {
+    const a = f.auto, k = 'sum:' + t.id + ':' + i;
+    const note = f.kind === 'other' ? (f.why === 'hwp' ? '한글(.hwp)은 읽지 못해요. 한글에서 PDF나 .hwpx로 저장해 다시 올려 주세요.' : f.why === 'scan' ? '글자를 찾지 못했어요. 스캔한 PDF라면 페이지를 캡처해 이미지로 올리면 AI가 읽어요.' : '이 형식은 읽지 못해요. 내용을 과제 내용 칸에 붙여넣어 주세요.') : '';
+    return '<div class="file"><div class="file-h"><b>' + esc(f.name) + '</b><button class="btn sm ghost" type="button" data-act="rmFile" data-i="' + i + '" aria-label="' + esc(f.name) + ' 삭제">삭제</button></div>' +
+      (note ? '<p class="status w">' + esc(note) + '</p>' : '') +
+      (a && a.keywords && a.keywords.length ? '<div class="kw">' + a.keywords.slice(0, 6).map(w => '<span>' + esc(w) + '</span>').join('') + '</div>' : '') +
+      (a && a.reqs && a.reqs.length ? '<div><span class="small muted">감점 방지 규격</span><ul class="req">' + a.reqs.slice(0, 4).map(r => '<li>' + esc(r) + '</li>').join('') + '</ul></div>' : '') +
+      (S.busy[k] ? '<p class="status">AI가 요약하는 중이에요...</p>' : f.summary ? '<details open><summary class="small">AI 요약</summary><div class="sum">' + esc(f.summary) + '</div></details>' : a && a.summary && a.summary.length ? '<details><summary class="small">핵심 문장 보기</summary><ul class="req">' + a.summary.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></details>' : '') +
+      (S.err[k] ? '<p class="status e">' + esc(S.err[k]) + '</p>' : '') + '</div>';
+  }).join('');
+  $('#wTips').innerHTML = L.buildTips(t, S.now).map(x => '<div class="tip"><b>' + esc(x.title) + '</b><span>' + esc(x.body) + '</span></div>').join('');
+}
+function renderGuidePanel(t) {
+  const key = 'guide:' + t.id, ai = t.guide && t.guide.data, stale = ai && t.guide.sig !== L.guideSig(t), busy = S.busy[key];
+  const g = ai || L.ruleGuide(t);
+  const msg = S.err[key] ? ['e', S.err[key]] : busy ? ['', 'AI가 과제 내용과 자료를 읽고 있어요. 보통 30초~1분 걸려요' + (S.stream[key] ? ' (작성 중 ' + S.stream[key] + '자)' : '') + '.'] : stale ? ['w', '과제 정보나 자료가 바뀌었어요. 다시 분석하면 반영돼요.'] : !ai ? ['', S.sample ? '지금은 자동 분석이에요. AI로 분석하면 올린 자료 본문을 읽고 이 과제에 맞춰 정리해요.' : '자동 분석이에요. Claude 앱에서 열면 AI 분석을 쓸 수 있어요.'] : null;
+  const maxN = Math.max(1, ...g.outline.map(o => parseFloat(o.amount) || 0));
+  const checks = t.checks || {};
+  $('#wGuide').innerHTML = '<div class="g-head"><div style="display:flex;gap:8px;align-items:center"><h2>작성 가이드</h2><span class="g-badge' + (ai ? ' ai">AI 분석' : '">자동 분석') + '</span></div>' +
+    (S.sample ? '<button class="btn sm ai" type="button" data-act="guide"' + (busy ? ' disabled' : '') + '>' + (busy ? '정리하는 중...' : ai ? (stale ? '바뀐 내용 반영해 다시 분석' : '다시 분석') : 'AI로 깊이 분석하기') + '</button>' : '') + '</div>' +
+    (msg ? '<p class="status ' + msg[0] + '" role="status">' + esc(msg[1]) + '</p>' : '') +
+    '<div class="need"><b class="small muted" style="display:block">이 과제가 요구하는 것</b>' + esc(g.summary || '과제 내용을 적으면 더 정확해져요.') + '</div>' +
+    '<h3>쟁점별 분석</h3><table class="stack"><thead><tr><th>쟁점</th><th>핵심 질문과 쓰는 법</th><th>분석 관점</th><th>근거 후보</th><th>예상 반론</th></tr></thead><tbody>' +
+    g.issues.map(x => '<tr><td><b>' + esc(x.issue) + '</b></td><td>' + esc(x.question) + '<span class="src" style="margin-top:6px;color:#6ee7b7">' + esc(x.how) + '</span></td><td><ul>' + x.angles.map(a => '<li>' + esc(a) + '</li>').join('') + '</ul></td><td>' + x.evidence.map(e => esc(e.point) + '<span class="src">' + esc(e.source) + '</span>').join('') + '</td><td>' + esc(x.counter) + '</td></tr>').join('') +
+    '</tbody></table>' +
+    '<h3>권장 분량 배분</h3><table class="alloc stack"><thead><tr><th>부분</th><th>분량</th><th>쓸 내용</th></tr></thead><tbody>' +
+    g.outline.map(o => '<tr><td><b>' + esc(o.part) + '</b><div class="abar" style="width:' + Math.round((parseFloat(o.amount) || 0) / maxN * 100) + '%"></div></td><td>' + esc(o.amount) + '</td><td>' + esc(o.points.join(' / ')) + '</td></tr>').join('') + '</tbody></table>' +
+    '<h3>제출 전 감점 방지 체크</h3><div>' + g.checklist.map((c, i) => '<label class="check' + (checks[c] ? ' done' : '') + '"><input type="checkbox" data-check="' + i + '"' + (checks[c] ? ' checked' : '') + '><span>' + esc(c) + '</span></label>').join('') + '</div>' +
+    (g.next ? '<div class="next"><b>지금 바로 할 일</b>' + esc(g.next) + '</div>' : '');
+  S.lastGuide = g;
+}
+
+/* ---------- render + routing ---------- */
+function route() {
+  const h = location.hash.slice(1);
+  if (/^guide-\d+$/.test(h) && byId(Number(h.slice(6)))) return { v: 'guide', id: Number(h.slice(6)) };
+  return { v: h === 'archive' ? 'archive' : 'dashboard' };
+}
+function render() {
+  S.now = Date.now();
+  const r = route();
+  document.querySelectorAll('[data-nav]').forEach(a => a.setAttribute('aria-current', a.dataset.nav === r.v ? 'page' : 'false'));
+  const act = S.tasks.filter(t => !t.done && !status(t).over);
+  const urgentN = act.filter(t => status(t).left <= 24 * H).length;
+  const nearest = act.sort((a, b) => a.due - b.due)[0];
+  const u = $('#urgent');
+  u.className = 'urgent' + (urgentN ? '' : ' calm');
+  u.textContent = urgentN ? '24시간 안 마감 ' + urgentN + '개' : nearest ? '다음 마감 D-' + Math.floor((nearest.due - S.now) / 86400000) : '마감 없음';
+  if (r.v === 'guide') {
+    const t = byId(r.id);
+    if (S.viewKey !== 'guide-' + r.id) { $('#view').innerHTML = viewGuide(t); S.viewKey = 'guide-' + r.id; }
+    renderHud(t); renderSources(t); renderGuidePanel(t);
+  } else {
+    S.viewKey = r.v;
+    $('#view').innerHTML = r.v === 'archive' ? viewArchive() : viewDashboard();
+    if (r.v === 'dashboard') calc('q');
+  }
+}
+function tickClock() { $('#clock').textContent = L.fmtWhen(Date.now()); }
+
+/* ---------- form ---------- */
+S.qf = { type: '보고서', name: '', due: '', amount: '', unit: '쪽', per: 40 };
+function readForm(p) {
+  const g = id => document.getElementById(p + '-' + id);
+  return { name: g('name').value.trim(), due: g('due').value, amount: g('amount').value.trim(), unit: g('unit').value, per: g('per').value.trim() };
+}
+function calc(p) {
+  const el = document.getElementById(p + '-calc');
+  if (!el) return;
+  const f = readForm(p), a = Number(f.amount), per = Number(f.per);
+  el.textContent = a > 0 && per > 0 ? L.fmtNeed(a * per) : '—';
+}
+function submit(p) {
+  const f = readForm(p), type = p === 'q' ? S.qf.type : S.mf.type;
+  const e = { name: '', due: '', amount: '' };
+  if (!f.name) e.name = '과제 이름을 입력해 주세요.'; else if (f.name.length > 30) e.name = '과제 이름은 30자까지 입력할 수 있어요.';
+  const due = f.due ? new Date(f.due).getTime() : NaN;
+  if (!f.due || isNaN(due)) e.due = '마감 날짜와 시간을 선택해 주세요.'; else if (due <= Date.now()) e.due = '이미 지난 시간이에요. 앞으로의 마감일을 골라 주세요.';
+  const hasA = f.amount !== '', a = Number(f.amount), per = Number(f.per);
+  if (hasA && !(a > 0 && per > 0)) e.amount = '분량과 걸리는 시간을 1 이상의 숫자로 둘 다 입력해 주세요.';
+  Object.keys(e).forEach(k => { document.getElementById(p + '-' + k + '-e').textContent = e[k]; });
+  const msg = document.getElementById(p + '-msg');
+  if (e.name || e.due || e.amount) { msg.className = 'err'; msg.textContent = '빨간 안내가 있는 칸을 확인해 주세요.'; return; }
+  const fields = { type, name: f.name, due, amount: hasA ? a : 0, unit: f.unit, per: hasA ? per : 0 };
+  if (p === 'm' && S.editing) {
+    patch(S.editing, Object.assign(fields, { sample: false }));
+    closeSheet();
+    toast('\'' + f.name + '\' 과제를 수정했어요.', null);
+    return;
+  }
+  S.tasks = S.tasks.concat([Object.assign({ id: S.nextId++, done: false, created: Date.now() }, fields)]);
+  save();
+  S.qf = { type, name: '', due: '', amount: '', unit: TYPES[type].unit, per: TYPES[type].per };
+  if (p === 'm') closeSheet();
+  render();
+  const m2 = document.getElementById('q-msg');
+  if (m2) { m2.className = 'ok'; m2.textContent = '\'' + f.name + '\' 과제를 추가했어요.'; }
+  if (p === 'm') toast('\'' + f.name + '\' 과제를 추가했어요.', null);
+}
+function openSheet(t) {
+  S.editing = t ? t.id : null;
+  S.mf = t ? { type: t.type || '기타', name: t.name, due: L.toLocalInput(t.due), amount: t.amount > 0 ? t.amount : '', unit: t.unit || '쪽', per: t.per > 0 ? t.per : (TYPES[t.type] || TYPES['기타']).per } : { type: '보고서', name: '', due: '', amount: '', unit: '쪽', per: 40 };
+  $('#sheetTitle').textContent = t ? '과제 수정' : '새 과제 등록';
+  $('#sheetFields').innerHTML = '<div class="form-grid">' + formFields('m', S.mf).replace('<div class="types"', '<div class="types full"').replace('class="btn primary sub"', 'class="btn primary sub full"').replace('<div class="calc">', '<div class="calc full">') + '</div>';
+  $('#sheet').hidden = false;
+  calc('m');
+  setTimeout(() => { const n = document.getElementById('m-name'); if (n) n.focus(); }, 30);
+}
+function closeSheet() { $('#sheet').hidden = true; S.editing = null; $('#newBtn').focus(); }
+
+/* ---------- undo toast ---------- */
+let undoTimer = null;
+function toast(text, items) {
+  clearTimeout(undoTimer);
+  S.undo = items;
+  $('#toastText').textContent = text;
+  $('#undoBtn').hidden = !items;
+  const p = $('#toastProg'); p.style.animation = 'none'; void p.offsetWidth; p.style.animation = '';
+  $('#toast').hidden = false;
+  undoTimer = setTimeout(() => { $('#toast').hidden = true; S.undo = null; }, items ? 8000 : 3000);
+}
+function removeWithUndo(pred, label) {
+  const gone = S.tasks.filter(pred), keep = S.tasks.filter(t => !pred(t));
+  if (!gone.length) return;
+  S.sel = {};
+  setTasks(keep);
+  toast(label, gone);
+}
+
+/* ---------- files + AI ---------- */
+function loadScript(src) { return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+let pdfReady = null;
+function ensurePdf() {
+  const b = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  return pdfReady || (pdfReady = loadScript(b + 'pdf.min.js').then(() => loadScript(b + 'pdf.worker.min.js')).then(() => {
+    const lib = window.pdfjsLib || window['pdfjs-dist/build/pdf'];
+    lib.GlobalWorkerOptions.workerSrc = b + 'pdf.worker.min.js';
+    globalThis.pdfjsLib = lib;
+    return lib;
+  }));
+}
+async function readFile(t, f) {
+  const r = { name: f.name, size: f.size, kind: 'text' };
+  const isImg = /^image\/(png|jpeg|webp|gif)$/.test(f.type), isPdf = f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+  const isOffice = /\.(docx|pptx|xlsx|hwpx)$/i.test(f.name), isText = /^text\//.test(f.type) || /\.(txt|md|csv)$/i.test(f.name);
+  let txt = '';
+  try {
+    if (isImg) { r.kind = 'image'; blobs[t.id + ':' + f.name + ':' + f.size] = f; return r; }
+    if (isPdf) { await ensurePdf(); txt = await L.readPdf(f); if (txt.replace(/\s/g, '').length < 20) { r.kind = 'other'; r.why = 'scan'; return r; } }
+    else if (isOffice) txt = await L.readOffice(f);
+    else if (isText) txt = await f.text();
+    else { r.kind = 'other'; r.why = /\.hwp$/i.test(f.name) ? 'hwp' : 'type'; return r; }
+  } catch (e) { r.kind = 'other'; r.why = 'type'; return r; }
+  if (txt.replace(/\s/g, '').length < 20) { r.kind = 'other'; return r; }
+  r.text = txt.slice(0, 12000);
+  try { r.auto = L.analyzeText(txt.slice(0, 60000)); r.auto.sentences = r.auto.sentences.slice(0, 150); } catch (e) {}
+  return r;
+}
+async function addFiles(id, list) {
+  const t = byId(id);
+  if (!t || !list.length) return;
+  S.reading[id] = true; render();
+  const res = [];
+  for (const f of list) res.push(await readFile(t, f));
+  delete S.reading[id];
+  const cur = byId(id), start = (cur.files || []).length;
+  patch(id, { files: (cur.files || []).concat(res) });
+  if (S.sample) {
+    for (let i = 0; i < res.length; i++) if (res[i].kind !== 'other') await summarize(id, start + i);
+    makeGuide(id);
+  }
+}
+function aiFail(key, e) {
+  S.err[key] = e && e.code === 'invalid_json' ? 'AI 답을 정리하지 못했어요. 다시 눌러 주세요.' : L.aiErrorText(e && e.code);
+  if (e && /not_granted|sampling_disabled|capability_disabled|not_declared/.test(e.code)) S.sample = null;
+}
+async function summarize(id, i) {
+  const t = byId(id), f = (t.files || [])[i], key = 'sum:' + id + ':' + i;
+  if (!f || !S.sample) return;
+  const head = '대학생 과제를 돕고 있어요. 아래 참고 자료를 한국어로 요약해 주세요.\n\n' + L.taskContext(t) + '\n\n형식(마크다운 기호 없이 일반 텍스트로):\n핵심 내용: 3~5줄, 줄마다 "- "로 시작\n과제에 쓸 근거: 2개, 줄마다 "- "로 시작\n쟁점과의 연결: 1~2문장\n\n';
+  const opts = { modelTier: 'default' };
+  let input;
+  const blob = blobs[id + ':' + f.name + ':' + f.size];
+  if (f.kind === 'image' && blob) { input = head + '자료는 첨부한 이미지("' + f.name + '")예요. 이미지 속 글과 도표를 읽고 요약해 주세요.'; opts.images = [blob]; }
+  else if (f.text) input = head + '자료 "' + f.name + '" 내용:\n' + f.text;
+  else return;
+  S.busy[key] = true; delete S.err[key]; render();
+  try {
+    const r = await S.sample(input, opts);
+    const cur = byId(id);
+    if (cur) patch(id, { files: cur.files.map((x, j) => j === i ? Object.assign({}, x, { summary: r.text }) : x) }, true);
+  } catch (e) { if (!(e && e.code === 'cancelled')) aiFail(key, e); }
+  delete S.busy[key]; render();
+}
+async function makeGuide(id) {
+  const t = byId(id), key = 'guide:' + id;
+  if (!t || !S.sample || S.busy[key]) return;
+  let budget = 26000;
+  const files = (t.files || []).map(f => {
+    let part = '■ 자료 "' + f.name + '"\n';
+    if (f.summary) part += '요약: ' + f.summary.slice(0, 1200) + '\n'; else if (f.auto) part += '핵심 문장: ' + (f.auto.summary || []).join(' / ') + '\n';
+    if (f.text && budget > 0) { const ex = f.text.slice(0, Math.min(6000, budget)); budget -= ex.length; part += '본문 발췌:\n' + ex + '\n'; }
+    return part;
+  }).join('\n');
+  const amountLine = t.amount > 0 ? t.amount + t.unit : '정해지지 않음';
+  const prompt = '너는 대학 과제 작성을 지도하는 조교다. 아래 [과제 정보]와 [참고 자료]를 꼼꼼히 읽고, 이 과제에만 해당하는 구체적인 작성 가이드를 만들어라.\n\n규칙\n- 일반론 금지. "근거를 들어라" 같은 말 대신 자료에 나온 개념·수치·사례·용어를 직접 짚어라.\n- 과제를 대신 써 주지 말고, 무엇을 어떤 순서로 어떻게 쓸지 안내하라.\n- 자료에 없는 사실이나 수치를 지어내지 마라. 자료에 없지만 필요한 것은 evidence의 source를 "찾아야 할 자료"로 하고 무엇을 찾을지 적어라.\n- 쟁점이 주어지면 그 쟁점을 그대로 쓰고, 없으면 과제 내용과 자료에서 핵심 쟁점 2~3개를 직접 뽑아라. 쟁점마다 서로 부딪히는 관점(예: 공리주의 대 의무론)을 angles에 드러내라.\n- outline의 amount는 과제 분량(' + amountLine + ')에 맞춰 합이 맞게 나눠라. 분량이 없으면 비율(%)로 적어라.\n- checklist는 감점을 막는 항목 5개.\n- 모든 문장은 한국어 존댓말, 짧고 구체적으로.\n\n오직 아래 형태의 JSON 하나만 답하라:\n{"summary":"과제가 요구하는 것 1~2문장","issues":[{"issue":"쟁점","question":"이 쟁점에서 답해야 할 핵심 질문 1문장","angles":["분석 관점 1문장","분석 관점 1문장"],"evidence":[{"point":"자료 속 근거(짧은 인용이나 요약)","source":"파일 이름 또는 찾아야 할 자료"}],"counter":"예상 반론과 재반박 방향 1~2문장","how":"이 부분을 쓰는 구체적 방법 1~2문장"}],"outline":[{"part":"서론","amount":"1쪽","points":["쓸 내용","쓸 내용"]}],"checklist":["제출 전 확인할 항목"],"next":"지금 바로 할 일 1문장"}\n\n[과제 정보]\n' + L.taskContext(t) + '\n\n[참고 자료]\n' + (files || '(올린 자료 없음)');
+  const sig = L.guideSig(t);
+  S.busy[key] = true; S.stream[key] = 0; delete S.err[key]; render();
+  try {
+    const onText = u => { S.stream[key] = u.text.length; if (route().id === id) renderGuidePanel(byId(id)); };
+    const raw = typeof S.sample.json === 'function'
+      ? await S.sample.json(prompt, { modelTier: 'default', onText })
+      : await S.sample(prompt, { modelTier: 'default', onText }).then(r => { const m = r.text.match(/\{[\s\S]*\}/); return JSON.parse(m ? m[0] : r.text); });
+    const g = L.normalizeGuide(raw);
+    if (g) patch(id, { guide: { data: g, sig, at: Date.now() } }, true); else S.err[key] = 'AI 답을 정리하지 못했어요. 다시 눌러 주세요.';
+  } catch (e) { if (!(e && e.code === 'cancelled')) aiFail(key, e); }
+  delete S.busy[key]; delete S.stream[key]; render();
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act],[data-type],[data-close]');
+  if (!b) return;
+  if (b.dataset.close !== undefined) { closeSheet(); return; }
+  if (b.dataset.type) {
+    const form = b.closest('form'), p = form.id === 'quick' ? 'q' : 'm', st = p === 'q' ? S.qf : S.mf, ty = TYPES[b.dataset.type];
+    st.type = b.dataset.type;
+    form.querySelectorAll('[data-type]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    document.getElementById(p + '-unit').value = ty.unit;
+    document.getElementById(p + '-per').value = ty.per;
+    form.querySelector('.calc span').firstChild.textContent = ty.hint + ' = 예상 소요 ';
+    calc(p); return;
+  }
+  const act = b.dataset.act, id = Number(b.dataset.id), r = route(), t = r.v === 'guide' ? byId(r.id) : null;
+  if (act === 'done') { const x = byId(id); patch(id, { done: true, doneAt: Date.now() }); toast('\'' + x.name + '\' 클리어! 아카이브로 옮겼어요.', null); }
+  else if (act === 'undone') { e.preventDefault(); patch(id, { done: false, doneAt: null }); }
+  else if (act === 'edit') openSheet(byId(id));
+  else if (act === 'del') { const x = byId(id); removeWithUndo(y => y.id === id, '\'' + x.name + '\' 과제를 삭제했어요.'); }
+  else if (act === 'clearSamples') { const n = S.tasks.filter(x => x.sample).length; removeWithUndo(x => x.sample, '예시 과제 ' + n + '개를 지웠어요.'); }
+  else if (act === 'selAll') { const done = S.tasks.filter(x => x.done); const all = done.every(x => S.sel[x.id]); S.sel = {}; if (!all) done.forEach(x => { S.sel[x.id] = true; }); render(); }
+  else if (act === 'delSel') { const n = S.tasks.filter(x => x.done && S.sel[x.id]).length; removeWithUndo(x => x.done && S.sel[x.id], '완료한 과제 ' + n + '개를 삭제했어요.'); }
+  else if (act === 'addIssue' && t) addIssue(t);
+  else if (act === 'rmIssue' && t) patch(t.id, { issues: t.issues.filter((_, i) => i !== Number(b.dataset.i)) });
+  else if (act === 'rmFile' && t) patch(t.id, { files: t.files.filter((_, i) => i !== Number(b.dataset.i)) });
+  else if (act === 'guide' && t) makeGuide(t.id);
+});
+function addIssue(t) {
+  const inp = $('#wIssue'), v = inp.value.trim();
+  if (!v) return;
+  inp.value = '';
+  patch(t.id, { issues: (t.issues || []).concat([v]), sample: false });
+  inp.focus();
+}
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.sel) { S.sel[el.dataset.sel] = el.checked; render(); return; }
+  const r = route();
+  if (el.dataset.check !== undefined && r.v === 'guide') {
+    const t = byId(r.id), c = S.lastGuide.checklist[Number(el.dataset.check)], ch = Object.assign({}, t.checks || {});
+    ch[c] = el.checked; patch(t.id, { checks: ch }); return;
+  }
+  if (el.id === 'wFile' && r.v === 'guide') { addFiles(r.id, Array.from(el.files || [])); el.value = ''; }
+});
+document.addEventListener('input', e => {
+  const el = e.target;
+  const qm = /^q-(name|due|amount|unit|per)$/.exec(el.id || '');
+  if (qm) S.qf[qm[1]] = el.value;
+  if (/^(q|m)-(amount|per)$/.test(el.id)) calc(el.id[0]);
+  if (el.id === 'wContent') { const r = route(); clearTimeout(S.cT); S.cT = setTimeout(() => { patch(r.id, { content: el.value }, true); const t = byId(r.id); renderSources(t); renderGuidePanel(t); }, 400); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.id === 'wIssue') { e.preventDefault(); const r = route(); addIssue(byId(r.id)); }
+  if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet();
+});
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  if (e.target.id === 'quick') submit('q'); else if (e.target.id === 'sheetForm') submit('m');
+});
+['dragover', 'dragleave', 'drop'].forEach(ev => document.addEventListener(ev, e => {
+  const d = e.target.closest && e.target.closest('#drop');
+  if (!d) return;
+  e.preventDefault();
+  d.classList.toggle('on', ev === 'dragover');
+  if (ev === 'drop') addFiles(route().id, Array.from(e.dataTransfer.files || []));
+}));
+$('#newBtn').addEventListener('click', () => openSheet(null));
+$('#sheet').addEventListener('click', e => { if (e.target.id === 'sheet') closeSheet(); });
+$('#undoBtn').addEventListener('click', () => {
+  if (!S.undo) return;
+  clearTimeout(undoTimer);
+  setTasks(S.tasks.concat(S.undo));
+  S.undo = null; $('#toast').hidden = true;
+});
+window.addEventListener('hashchange', () => { S.viewKey = null; render(); window.scrollTo(0, 0); });
+
+load();
+if (S.blocked) $('#banner').hidden = false;
+render();
+tickClock();
+setInterval(tickClock, 20000);
+setInterval(() => {
+  const a = document.activeElement;
+  if (a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && route().v === 'dashboard') return;
+  render();
+}, 60000);
+if (window.claude && typeof window.claude.use === 'function') {
+  window.claude.use('sample').then(fn => { S.sample = fn || null; render(); }, () => {});
+}
+}
+</script>
+</body>
+</html>
