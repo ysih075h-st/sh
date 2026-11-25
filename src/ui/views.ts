@@ -13,6 +13,7 @@ export interface ViewState {
   quick: FormData;
   sel: Record<number, boolean>;
   reading: Record<number, number>;
+  readingMsg: Record<number, string>;
   notify: { enabled: boolean; permission: NotificationPermission | 'unsupported' };
   confirm: '' | 'wipe' | 'import';
   importNote: string;
@@ -96,7 +97,7 @@ export function workspaceShell(t: Task): string {
     + `<section class="band tight"><div class="wrap ws"><div class="panel"><h2>과제 정보와 자료</h2>`
     + `<label class="f">과제 내용·안내문<textarea id="wContent" rows="5" placeholder="교수님 안내문이나 강의계획서의 과제 부분을 붙여 넣으세요. 분량, 출처 형식, 평가 기준을 찾아 정리해요.">${esc(t.content || '')}</textarea></label>`
     + `<div style="display:flex;flex-direction:column;gap:6px"><label class="f" for="wIssue">주요 쟁점</label><div class="issue-in"><input type="text" id="wIssue" maxlength="80" placeholder="예: 표본 크기가 충분한가"><button class="btn" type="button" data-act="addIssue">추가</button></div><div class="chips" id="wIssues"></div></div>`
-    + `<label class="drop" id="drop"><input type="file" id="wFile" multiple accept=".pdf,.docx,.pptx,.xlsx,.hwpx,.hwp,.txt,.md,.csv,image/*">참고 자료를 끌어다 놓거나 눌러서 고르세요<span class="small muted" style="display:block;margin-top:4px">PDF, 워드, PPT, 엑셀, 한글(.hwpx), 텍스트. 파일은 이 기기 밖으로 보내지 않고 브라우저 안에서 읽어요.</span></label>`
+    + `<label class="drop" id="drop"><input type="file" id="wFile" multiple accept=".pdf,.hwp,.hwpx,.docx,.doc,.pptx,.ppt,.xlsx,.txt,.md,.csv,image/*">참고 자료를 끌어다 놓거나 눌러서 고르세요<span class="small muted" style="display:block;margin-top:4px">PDF, 한글, 워드, PPT, 엑셀, 텍스트, 안내문 사진이나 스캔본도 돼요. 파일은 이 기기 밖으로 보내지 않고 브라우저 안에서 읽어요.</span></label>`
     + `<div id="wFiles" style="display:flex;flex-direction:column;gap:8px"></div><h3>일정·분량 팁</h3><div id="wTips" style="display:flex;flex-direction:column;gap:8px"></div></div>`
     + `<div class="panel" id="wGuide"></div></div></section>`;
 }
@@ -110,13 +111,15 @@ export function workspaceHud(t: Task, now: number): string {
 }
 
 export function workspaceSources(t: Task, v: ViewState): string {
-  const reading = v.reading[t.id] ? `<p class="status" role="status">자료 ${v.reading[t.id]}개를 읽고 정리하는 중이에요...</p>` : '';
+  const reading = v.reading[t.id] ? `<p class="status" role="status" id="readStatus">${esc(v.readingMsg[t.id] || `자료 ${v.reading[t.id]}개를 읽는 중이에요.`)}</p>` : '';
   return reading + (t.files || []).map((f, i) => {
     const a = f.auto;
     const note = f.kind === 'other' ? UNREADABLE_MESSAGE[f.why || 'type'] : '';
     const reqs = a ? a.reqLines.slice(0, 4) : [];
     return `<div class="file"><div class="file-h"><b title="${esc(f.name)}">${esc(f.name)}</b><button class="btn sm ghost" type="button" data-act="rmFile" data-i="${i}" aria-label="${esc(f.name)} 삭제">삭제</button></div>`
       + (note ? `<p class="status w">${esc(note)}</p>` : '')
+      + (f.ocr ? '<p class="status">사진이나 스캔에서 글자 인식으로 읽었어요. 확실히 읽지 못한 낱말은 ▢로 표시했어요. 근거로 쓸 때는 원본과 대조해 주세요.</p>' : '')
+      + (f.note ? `<p class="status">${esc(f.note)}</p>` : '')
       + (a && a.keywords.length ? `<div class="kw" aria-label="핵심어">${a.keywords.slice(0, 6).map(w => `<span>${esc(w)}</span>`).join('')}</div>` : '')
       + (reqs.length ? `<div><span class="small muted">요구사항으로 보이는 문장</span><ul class="req">${reqs.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>` : '')
       + (a && a.summary.length ? `<details><summary>핵심 문장 ${a.summary.length}개 보기</summary><ul class="req">${a.summary.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>` : '')

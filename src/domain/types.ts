@@ -19,13 +19,16 @@ export interface FileAnalysis {
   chars: number;
 }
 
-export type Unreadable = 'hwp' | 'scan' | 'image' | 'type' | 'empty' | 'error';
+export type Unreadable = 'hwp' | 'scan' | 'image' | 'type' | 'empty' | 'error' | 'password' | 'hwp3' | 'heic' | 'offline' | 'blank';
 
 export interface TaskFile {
   name: string;
   size: number;
   kind: 'text' | 'other';
   why?: Unreadable;
+  /** Text came from character recognition (photo or scanned page). */
+  ocr?: boolean;
+  note?: string;
   auto?: FileAnalysis;
 }
 

@@ -28,6 +28,7 @@ const ui = {
   editing: null as number | null,
   sel: {} as Record<number, boolean>,
   reading: {} as Record<number, number>,
+  readingMsg: {} as Record<number, string>,
   confirm: '' as V.ViewState['confirm'],
   importNote: '',
   pendingImport: null as Task[] | null,
@@ -58,7 +59,7 @@ function setTasks(tasks: Task[], quiet = false) { data.tasks = tasks; persist();
 function patch(id: number, p: Partial<Task>, quiet = false) { setTasks(data.tasks.map(t => (t.id === id ? { ...t, ...p } : t)), quiet); }
 
 function viewState(): V.ViewState {
-  return { tasks: data.tasks, now: Date.now(), filter: ui.filter, quick: ui.quick, sel: ui.sel, reading: ui.reading,
+  return { tasks: data.tasks, now: Date.now(), filter: ui.filter, quick: ui.quick, sel: ui.sel, reading: ui.reading, readingMsg: ui.readingMsg,
     notify: { enabled: data.settings.notify, permission: permission() }, confirm: ui.confirm, importNote: ui.importNote, installable: !!ui.installEvent };
 }
 
@@ -209,8 +210,18 @@ async function addFiles(id: number, list: File[]) {
   ui.reading[id] = list.length;
   render();
   const results = [];
-  for (const f of list) results.push(await readSource(f));
+  for (const [i, f] of list.entries()) {
+    const label = list.length > 1 ? `${f.name} (${i + 1}/${list.length}): ` : `${f.name}: `;
+    const status = (m: string) => {
+      ui.readingMsg[id] = label + m;
+      const el = document.getElementById('readStatus');
+      if (el) el.textContent = ui.readingMsg[id];
+    };
+    status('읽는 중이에요.');
+    results.push(await readSource(f, status));
+  }
   delete ui.reading[id];
+  delete ui.readingMsg[id];
   const cur = byId(id);
   if (cur) patch(id, { files: [...(cur.files || []), ...results], sample: false });
   const unread = results.filter(r => r.kind === 'other').length;

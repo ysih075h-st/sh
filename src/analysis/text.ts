@@ -14,7 +14,7 @@ export function toSentences(text: string): string[] {
   const kept = lines.filter(l => l && (count.get(l) || 0) < 3 && !/^\d+(\s*\/\s*\d+)?$/.test(l) && !/^(출처|source)\s*[:：]/i.test(l));
   let joined = '';
   for (const l of kept) {
-    const bullet = /^([•\-–·●○■□▶►*]|\d+[.)]\s|[①-⑳]|[가-하][.)]\s)/.test(l);
+    const bullet = /^([•\-–·●○■□▶►*]|\d{1,2}[.)](\s|(?=[가-힣]))|[①-⑳]|[가-하][.)]\s)/.test(l);
     if (!joined) joined = l;
     else if (bullet || /[.!?。:：]$/.test(joined) || /^\[.*\]$/.test(l) || (joined.split('\n').pop() || '').length < 40) joined += '\n' + l;
     else joined += ' ' + l;
@@ -80,7 +80,8 @@ function cleanItem(s: string): string {
     .replace(/[.。]$/, '').trim();
 }
 
-export function extractRequirements(sentences: string[]): { req: Requirements; lines: string[] } {
+/** `strict` is for recognized text: a required item must contain Korean, so a misread word never becomes one. */
+export function extractRequirements(sentences: string[], strict = false): { req: Requirements; lines: string[] } {
   const req: Requirements = { fileTypes: [], criteria: [], musts: [] };
   const lines: string[] = [];
   for (const s of sentences) {
@@ -119,7 +120,7 @@ export function extractRequirements(sentences: string[]): { req: Requirements; l
       while ((m = re.exec(s))) {
         const name = m[1].replace(/^(평가\s*기준|평가|배점|채점\s*기준|비중|및|그리고)\s*/, '').trim();
         const pct = Number(m[2]);
-        if (name.length >= 2 && name.length <= 12 && pct > 0 && pct <= 100 && !req.criteria.some(c => c.name === name)) { req.criteria.push({ name, pct }); hit = true; }
+        if (!name.includes('▢') && name.length >= 2 && name.length <= 12 && pct > 0 && pct <= 100 && !req.criteria.some(c => c.name === name)) { req.criteria.push({ name, pct }); hit = true; }
       }
     }
     if (MUST_LINE.test(s)) {
@@ -128,7 +129,7 @@ export function extractRequirements(sentences: string[]): { req: Requirements; l
       for (const part of body.split(english ? /,|;/ : /,|·|\/|，| 및 /)) {
         const item = cleanItem(part);
         const max = english ? 40 : 18;
-        if (item.length >= 2 && item.length <= max && !/[.?!:]/.test(item) && !/(필수|반드시|제출|할 것|평가|배점)/.test(item) && !(!english && JUNK_ITEM.test(item)) && !/%/.test(item) && !req.musts.includes(item)) { req.musts.push(item); hit = true; }
+        if (item.length >= 2 && item.length <= max && !/[.?!:]/.test(item) && !/(필수|반드시|제출|할 것|평가|배점)/.test(item) && !(!english && JUNK_ITEM.test(item)) && !/[%▢]/.test(item) && !(strict && !/[가-힣]{2}/.test(item)) && !req.musts.includes(item)) { req.musts.push(item); hit = true; }
       }
     }
     if (hit) lines.push(s);
@@ -162,8 +163,14 @@ export function looksLikeProse(s: string): boolean {
   return letters >= s.length * 0.5 && symbols <= 2 && (hangul >= 8 || letters >= 25) && s.length >= 15;
 }
 
-export function analyzeText(text: string): FileAnalysis {
-  const sentences = toSentences(text);
+/**
+ * `unsure` marks words character recognition could not read. All sentences feed requirement extraction
+ * (which skips marked items), but only sentences with at most one marked word become key sentences or evidence.
+ */
+export function analyzeText(text: string, unsure?: string): FileAnalysis {
+  const all = toSentences(text);
+  // One unsure word in an otherwise clear sentence is shown as ▢; more than that, or a doubtful line, is left out.
+  const sentences = unsure ? all.filter(s => !s.startsWith(unsure) && s.split(unsure).length <= 2) : all;
   const toks = sentences.map(s => words(s));
   const freq = new Map<string, number>(), docf = new Map<string, number>();
   toks.forEach(t => {
@@ -193,6 +200,6 @@ export function analyzeText(text: string): FileAnalysis {
     chosen.push(c);
   }
   chosen.sort((a, b) => a.i - b.i);
-  const { req, lines } = extractRequirements(sentences);
+  const { req, lines } = extractRequirements(all, !!unsure);
   return { summary: chosen.map(c => c.s), keywords: keywords.length >= 3 ? keywords : [], sentences: sentences.slice(0, 200), req, reqLines: lines, chars: text.length };
 }

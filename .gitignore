@@ -1,3 +1,6 @@
 node_modules
 dist
 public/cmaps
+public/ocr
+# Sample .hwp files from pyhwp and hwp.js test fixtures; see tests/readers.test.ts
+tests/files/third-party

@@ -86,7 +86,7 @@ export function findEvidence(t: Task, issue: string, max = 2): Evidence[] {
   const need = keys.length >= 3 ? 2 : 1;
   const pool: { s: string; src: string }[] = [];
   // A file that reads like an assignment brief feeds the requirements, not the evidence.
-  for (const f of t.files || []) if (f.auto && f.auto.reqLines.length < 2) for (const s of f.auto.sentences) pool.push({ s, src: f.name });
+  for (const f of t.files || []) if (f.auto && f.auto.reqLines.length < 2) for (const s of f.auto.sentences) pool.push({ s, src: f.ocr ? `${f.name} · 사진에서 읽음, 원본과 대조해 쓰세요` : f.name });
   const stem = (k: string) => (k.length >= 3 ? k.slice(0, k.length - 1) : k);
   const has = (s: string, k: string) => s.toLowerCase().includes(stem(k).toLowerCase());
   // A key that shows up in only a few sentences is specific enough to count on its own.
@@ -95,7 +95,7 @@ export function findEvidence(t: Task, issue: string, max = 2): Evidence[] {
     .filter(p => p.s.length <= 160 && looksLikeProse(p.s) && !/[?？]$/.test(p.s) && !/(할 것|하시오|하세요|하십시오|바랍니다|주세요|해야 함)\s*[.!]?$/.test(p.s) && /([다요음함됨임]|니다)\s*[.!]?["”’)]*$|[.!]["”’)]*$/.test(p.s))
     .map(p => { const m = keys.filter(k => has(p.s, k)); return { ...p, n: m.length, rareHit: m.some(k => rare.has(k)), num: /\d/.test(p.s) ? 1 : 0 }; })
     .filter(p => p.n >= need || (p.n >= 1 && p.rareHit && keys.length <= 3))
-    .sort((a, b) => b.n - a.n || b.num - a.num || a.s.length - b.s.length);
+    .sort((a, b) => b.n - a.n || Number(a.s.includes('▢')) - Number(b.s.includes('▢')) || b.num - a.num || a.s.length - b.s.length);
   const out: Evidence[] = [];
   for (const h of hits) {
     if (out.length >= max) break;
@@ -215,8 +215,8 @@ export function buildGuide(t: Task): Guide {
     ? (issues.length ? `개념 정리부터 시작하세요. ${quote(stripQ(issues[0].issue))}의 정의와 공식을 한 줄로 적어 두면 풀이가 빨라져요.` : '헷갈리는 개념을 쟁점 칸에 적어 두면 개념별 정리 방법이 나와요.')
     : !issues.length
     ? '과제에서 답해야 할 질문을 2~3개 골라 쟁점으로 추가하세요. 쟁점별로 쓰는 법과 근거 후보가 나와요.'
-    : !hasFiles && !t.content
-      ? '과제 안내문을 붙여 넣거나 참고 자료를 올리세요. 요구사항과 근거 후보를 찾아 드려요.'
+    : !hasFiles && !t.content && !(t.files || []).some(f => f.auto)
+      ?'과제 안내문을 붙여 넣거나 참고 자료를 올리세요. 요구사항과 근거 후보를 찾아 드려요.'
       : !hasFiles
         ? '쟁점마다 참고 자료(기사·논문·통계)를 하나씩 찾아 올리세요. 근거로 쓸 문장을 찾아 드려요.'
       : issues.some(i => !i.evidence[0].found)
@@ -248,7 +248,7 @@ export function buildTips(t: Task, now = Date.now()): Tip[] {
   if (t.type === '문제풀이') tips.push({ title: '푸는 순서', body: '전체를 훑어본 뒤 쉬운 문제부터 푸세요. 5분 넘게 막히면 표시만 하고 넘어가세요.' });
   if (t.type === '보고서' && (t.issues || []).length) tips.push({ title: '소제목에 쟁점을 쓰세요', body: '본론 소제목을 쟁점 문장 그대로 쓰면 채점하는 사람이 어디서 무엇을 다뤘는지 바로 찾을 수 있어요.' });
   const unread = (t.files || []).filter(f => f.kind === 'other');
-  if (unread.length) tips.push({ title: `읽지 못한 자료 ${unread.length}개`, body: '한글(.hwp)은 PDF나 .hwpx로 저장해 다시 올리고, 이미지나 스캔본은 필요한 내용을 과제 내용 칸에 옮겨 적어 주세요.' });
+  if (unread.length) tips.push({ title: `읽지 못한 자료 ${unread.length}개`, body: '파일 아래 안내대로 고쳐서 다시 올려 주세요. 그래도 안 되면 필요한 부분만 과제 내용 칸에 붙여 넣어도 돼요.' });
   if (!t.content && !(t.files || []).some(f => f.auto)) tips.push({ title: '안내문을 올려 주세요', body: '교수님 안내문이나 강의계획서의 과제 부분을 붙여 넣으면 분량·출처·평가 기준을 자동으로 찾아요.' });
   return tips;
 }
